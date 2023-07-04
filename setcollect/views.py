@@ -121,11 +121,21 @@ def question_delete(request):
 def question_edit(request, nid):
     if request.method == "GET":
         row_object = Question.objects.filter(id = nid).first()
-        return render(request, 'question_edit.html', {"row_object":row_object})
+        return render(request, 'question_edit.html', {"row_object": row_object})
     
-    question = request.POST.get("question")
-    tag_name = request.POST.get("tag_name")
-    Question.objects.filter(id=nid).update(question=question)
-    Question.objects.filter(id=nid).update(tag_name=tag_name)
+    question_text = request.POST.get("question")
+    # Get the question instance after updating
+    Question.objects.filter(id=nid).update(question=question_text)
+    question = Question.objects.get(id=nid)
+
+    tag_names = request.POST.getlist("tag_name")
+    tag_names = tag_names[0].split(" ")
+
+    # Remove all existing tags for the question
+    question.tag_set.clear()
+
+    for tag_name in tag_names:
+        tag, created = Tag.objects.get_or_create(tag_name=tag_name)
+        tag.question.add(question)
 
     return redirect("http://127.0.0.1:8000/question/list/")
