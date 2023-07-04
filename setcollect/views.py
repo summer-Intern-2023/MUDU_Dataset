@@ -77,6 +77,17 @@ def info_edit(request, nid):
 
     return redirect("http://127.0.0.1:8000/info/list/")
 
+def user_list(request):
+    #get all datas in sql
+    data_list = Question.objects.prefetch_related("lmodel_set").all()
+    for data in data_list:    
+        print(data)
+        
+    
+    #tansform into html and return
+    return render(request,"user_list.html",{"data_list":data_list})
+    
+
 #---#
 
 #--data collection--#
