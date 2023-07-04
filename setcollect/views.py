@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 import django.http
 
-from setcollect.models import UserInfo
+from setcollect.models import UserInfo, Question, LModel
 from django import forms
 
 class LoginForm(forms.Form):
@@ -80,5 +80,74 @@ def info_edit(request, nid):
 #---#
 
 #--data collection--#
+def question_list(request):
+    #get all datas in sql
+    data_list = Question.objects.all()
+    
+    #tansform into html and return
+    return render(request,"question_list.html",{"data_list":data_list})
+
+def question_add(request):
+    if request.method == "GET":
+        return render(request, 'question_add.html')
+    
+    question = request.POST.get("question")
+    tag_name = request.POST.get("tag_name")
+
+    Question.objects.create(question = question, tag_name = tag_name)
+    return redirect("http://127.0.0.1:8000/question/list/")
+
+def question_delete(request):
+    nid = request.GET.get('nid')
+    Question.objects.filter(id = nid).delete()
+    return redirect("http://127.0.0.1:8000/question/list/")
+
+def question_edit(request, nid):
+    if request.method == "GET":
+        row_object = Question.objects.filter(id = nid).first()
+        return render(request, 'question_edit.html', {"row_object":row_object})
+    
+    question = request.POST.get("question")
+    tag_name = request.POST.get("tag_name")
+    Question.objects.filter(id=nid).update(question=question)
+    Question.objects.filter(id=nid).update(tag_name=tag_name)
+
+    return redirect("http://127.0.0.1:8000/question/list/")
 
 
+#---#
+# LModel solution management
+def lmodel_list(request, nid):
+    #get all datas in sql
+    data = Question.objects.get(question_id = nid)
+    module_list = data.LModel_set.all()
+
+    #tansform into html and return
+    return render(request, "lmodel_list.html",{"data_list":module_list})
+
+def lmodel_add(request, nid):
+    if request.method == "GET":
+        return render(request, 'lmodel_add.html')
+    
+    lmodel = request.POST.get("lmodule")
+    answer = request.POST.get("answer")
+    Question.objects.get(question_id = nid).LModel_set.create(lmodel = lmodel, answer = answer)
+    return redirect("http://127.0.0.1:8000/lmodel/list/%s" % nid)
+
+#delete this method
+def lmodel_delete(request, nid):
+    lmodel = request.POST.get("lmodule")
+    Question.objects.get(question_id = nid).LModel_set.filter(id = lmodel).delete()
+    return redirect("http://127.0.0.1:8000/lmodel/list/")
+
+def lmodel_edit(request, nid):
+    if request.method == "GET":
+        row_object = Question.objects.get(question_id = nid).LModel_set.get(id = nid)
+        return render(request, 'lmodel_edit.html', {"row_object":row_object})
+    
+    lmodel = request.POST.get("lmodule")
+    answer = request.POST.get("answer")
+    Question.objects.get(question_id = nid).LModel_set.filter(id = nid).update(lmodel = lmodel)
+    Question.objects.get(question_id = nid).LModel_set.filter(id = nid).update(answer = answer)
+
+    return redirect("http://127.0.0.1:8000/lmodel/list/")

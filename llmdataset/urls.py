@@ -30,6 +30,11 @@ urlpatterns = [
     path('info/delete/', views.info_delete),
     path('info/<int:nid>/edit/', views.info_edit),
     path('info/main/', views.info_main),
-    
+
+    #question manage
+    path('question/list/', views.question_list),
+    path('question/add/', views.question_add),
+    path('question/delete/', views.question_delete),
+    path('question/<int:nid>/edit/', views.question_edit),
     
 ]
