@@ -97,8 +97,11 @@ def question_add(request):
     
     question = request.POST.get("question")
     tag_name = request.POST.get("tag_name")
-
-    Question.objects.create(question = question, tag_name = tag_name)
+    lmodel = request.POST.get("lmodel")
+    
+    
+    
+    Question.objects.create(question = question, tag_name = tag_name, lmodel = lmodel, )
     return redirect("http://127.0.0.1:8000/question/list/")
 
 def question_delete(request):
