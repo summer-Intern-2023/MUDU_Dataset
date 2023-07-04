@@ -33,14 +33,26 @@
                 </thead>
                 <tbody>
                     {% for obj in data_list %}
+                    {% for lmodel in obj.lmodel_set.all %}
                     <tr>
                         <td>{{ obj.id }}</td>
                         <td>{{ obj.question }}</td>
                         <td>{{ obj.tag_name }}</td>
-                        
-                        <td>{{ obj.lmodel_set.lmodel }}</td>
-                        <td>{{ obj.lmodel_set.answer }}</td>
-                        
+                        <td>{{ lmodel.get_lmodel_display }}</td>
+                        <td>{{ lmodel.answer }}</td>
+                        <td>
+                            <a class="btn btn-primary btn-xs"
+                                href="http://127.0.0.1:8000/question/{{ obj.id }}/edit/">编辑</a>
+                            <a class="btn btn-danger btn-xs"
+                                href="http://127.0.0.1:8000/question/delete/?nid={{obj.id}}">删除</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td>{{ obj.id }}</td>
+                        <td>{{ obj.question }}</td>
+                        <td>{{ obj.tag_name }}</td>
+                        <td colspan="2">No answers for this question.</td>
                         <td>
                             <a class="btn btn-primary btn-xs"
                                 href="http://127.0.0.1:8000/question/{{ obj.id }}/edit/">编辑</a>
@@ -49,8 +61,10 @@
                         </td>
                     </tr>
                     {% endfor %}
+                    {% endfor %}
                 </tbody>
             </table>
+
         </div>
 
     </div>

@@ -95,13 +95,16 @@ def question_add(request):
     if request.method == "GET":
         return render(request, 'question_add.html')
     
-    question = request.POST.get("question")
+    question_text = request.POST.get("question")
     tag_name = request.POST.get("tag_name")
-    lmodel = request.POST.get("lmodel")
-    
-    
-    
-    Question.objects.create(question = question, tag_name = tag_name, lmodel = lmodel, )
+
+    question = Question.objects.create(question = question_text, tag_name = tag_name)
+
+    lmodel_choice = request.POST.get("lmodel")
+    answer = request.POST.get("answer")
+
+    # Create the LModel
+    LModel.objects.create(lmodel=lmodel_choice, answer=answer, question=question)
     return redirect("http://127.0.0.1:8000/question/list/")
 
 def question_delete(request):
@@ -120,6 +123,11 @@ def question_edit(request, nid):
     Question.objects.filter(id=nid).update(tag_name=tag_name)
 
     return redirect("http://127.0.0.1:8000/question/list/")
+
+
+
+
+
 
 
 #---#
