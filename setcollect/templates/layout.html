@@ -16,11 +16,15 @@
         }
         
         .navbar-default .navbar-brand { 
-            background-color: white; transition: background-color 0.3s; 
+            background-color: #aaebff; transition: background-color 0.3s; 
         }
 
         .navbar-default .navbar-brand:hover {
             background-color: lightgray; 
+        }
+        
+        .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus { 
+            background-color: lightgray;
         }
 
     </style>
@@ -79,7 +83,7 @@
     <div>
         {% block content %} {% endblock %}
     </div>
-
+    
 
 
 
