@@ -27,6 +27,7 @@
                             <th>ID</th>
                             <th>用户名</th>
                             <th>密码</th>
+                            <th>权限</th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -36,6 +37,7 @@
                             <td>{{ obj.id }}</td>
                             <td>{{ obj.name }}</td>
                             <td>{{ obj.password }}</td>
+                            <td>{{ obj.role }}</td>
                             <td>
                                 <a class="btn btn-primary btn-xs"
                                     href="http://127.0.0.1:8000/info/{{ obj.id }}/edit/">编辑</a>

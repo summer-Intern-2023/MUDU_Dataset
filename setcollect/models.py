@@ -15,7 +15,7 @@ class UserInfo(models.Model):
 class Question(models.Model):
     question = models.TextField()
     tag_name = models.CharField(max_length=32)
-    
+
 
 class LModel(models.Model):
     model_choice = (
@@ -27,7 +27,7 @@ class LModel(models.Model):
     lmodel = models.SmallIntegerField(verbose_name = "choice of model", choices = model_choice)
     answer = models.TextField()
     
-    question_from = models.ForeignKey("Question", on_delete = models.CASCADE)
+    question = models.ForeignKey("Question", on_delete = models.CASCADE)
     
   
 # class tag(models.Model):
