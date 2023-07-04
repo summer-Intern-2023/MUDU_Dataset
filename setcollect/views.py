@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 import django.http
 
-from setcollect.models import UserInfo, Question, LModel
+from setcollect.models import UserInfo, Question, LModel, Tag
 from django import forms
 
 class LoginForm(forms.Form):
@@ -82,10 +82,8 @@ def info_edit(request, nid):
 #--data collection--#
 def question_list(request):
     #get all datas in sql
-    data_list = Question.objects.prefetch_related("lmodel_set").all()
-    for data in data_list:    
-        print(data)
-        
+    data_list = Question.objects.prefetch_related("lmodel_set", "tag_set").all()
+
     
     #tansform into html and return
     return render(request,"question_list.html",{"data_list":data_list})
@@ -96,15 +94,23 @@ def question_add(request):
         return render(request, 'question_add.html')
     
     question_text = request.POST.get("question")
-    tag_name = request.POST.get("tag_name")
+    tag_names = request.POST.getlist("tag_names")
+    
 
-    question = Question.objects.create(question = question_text, tag_name = tag_name)
+
+    question = Question.objects.create(question = question_text)
 
     lmodel_choice = request.POST.get("lmodel")
     answer = request.POST.get("answer")
 
     # Create the LModel
     LModel.objects.create(lmodel=lmodel_choice, answer=answer, question=question)
+
+    # Create the tag
+    for tag_name in tag_names:
+        tag, _ = Tag.objects.get_or_create(name=tag_name, question=question)
+        tag.save()
+    
     return redirect("http://127.0.0.1:8000/question/list/")
 
 def question_delete(request):
@@ -123,9 +129,12 @@ def question_edit(request, nid):
     Question.objects.filter(id=nid).update(tag_name=tag_name)
 
     return redirect("http://127.0.0.1:8000/question/list/")
+<<<<<<< HEAD
 
 
 
 
 
 
+=======
+>>>>>>> 9b3f9230d139f045ac3b794acaf48d036277c73b
