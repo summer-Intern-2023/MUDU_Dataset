@@ -25,10 +25,9 @@
                     <tr>
                         <th>ID</th>
                         <th>问题</th>
-                        <th>Tags</th>
+                        <th>tag</th>
                         <th>模型</th>
                         <th>回答</th>
-                        <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,46 +36,21 @@
                     <tr>
                         <td>{{ obj.id }}</td>
                         <td>{{ obj.question }}</td>
-                        <td>
-                            {% for tag in obj.tag_set.all %}
-                            {{ tag.tag_name }}
-                            {% empty %}
-                            No tags for this question.
-                            {% endfor %}
-                        </td>
+                        <td>{{ obj.tag_name }}</td>
                         <td>{{ lmodel.get_lmodel_display }}</td>
                         <td>{{ lmodel.answer }}</td>
-                        <td>
-                            <a class="btn btn-primary btn-xs"
-                                href="http://127.0.0.1:8000/question/{{ obj.id }}/edit/">编辑</a>
-                            <a class="btn btn-danger btn-xs"
-                                href="http://127.0.0.1:8000/question/delete/?nid={{obj.id}}">删除</a>
-                        </td>
                     </tr>
                     {% empty %}
                     <tr>
                         <td>{{ obj.id }}</td>
                         <td>{{ obj.question }}</td>
-                        <td>
-                            {% for tag in obj.tag_set.all %}
-                            {{ tag.tag_name }}
-                            {% empty %}
-                            No tags for this question.
-                            {% endfor %}
-                        </td>
+                        <td>{{ obj.tag_name }}</td>
                         <td colspan="2">No answers for this question.</td>
-                        <td>
-                            <a class="btn btn-primary btn-xs"
-                                href="http://127.0.0.1:8000/question/{{ obj.id }}/edit/">编辑</a>
-                            <a class="btn btn-danger btn-xs"
-                                href="http://127.0.0.1:8000/question/delete/?nid={{obj.id}}">删除</a>
-                        </td>
                     </tr>
                     {% endfor %}
                     {% endfor %}
                 </tbody>
             </table>
-
 
         </div>
 
