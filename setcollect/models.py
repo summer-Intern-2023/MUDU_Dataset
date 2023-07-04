@@ -28,9 +28,6 @@ class LModel(models.Model):
     answer = models.TextField()
     
     question = models.ForeignKey("Question", on_delete = models.CASCADE)
-    
-  
-# class tag(models.Model):
-#     tag_name = models.CharField(max_length=32)
-    
-#     question_from = models.ForeignKey("Question", on_delete=models.CASCADE)
+
+
+#
