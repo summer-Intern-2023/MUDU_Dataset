@@ -129,12 +129,9 @@ def question_edit(request, nid):
     Question.objects.filter(id=nid).update(tag_name=tag_name)
 
     return redirect("http://127.0.0.1:8000/question/list/")
-<<<<<<< HEAD
 
 
 
 
 
 
-=======
->>>>>>> 9b3f9230d139f045ac3b794acaf48d036277c73b
