@@ -94,10 +94,10 @@ def question_add(request):
         return render(request, 'question_add.html')
     
     question_text = request.POST.get("question")
-    tag_names = request.POST.getlist("tag_names")
+    tag_names = request.POST.getlist("tag_name")
+    tag_names = tag_names[0].split(" ")
+    print(tag_names)
     
-
-
     question = Question.objects.create(question = question_text)
 
     lmodel_choice = request.POST.get("lmodel")
@@ -108,8 +108,8 @@ def question_add(request):
 
     # Create the tag
     for tag_name in tag_names:
-        tag, _ = Tag.objects.get_or_create(name=tag_name, question=question)
-        tag.save()
+        tag, created = Tag.objects.get_or_create(tag_name=tag_name)
+        tag.question.add(question)
     
     return redirect("http://127.0.0.1:8000/question/list/")
 
