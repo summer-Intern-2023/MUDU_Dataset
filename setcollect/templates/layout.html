@@ -9,14 +9,20 @@
     <title>LLM dataset</title>
     <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1-dist/css/bootstrap.min.css' %}">
     <style>
-        .highlight { 
-            background-color: blue; 
-            color: white;
-        }
+
 
         .navbar {
             border: 0;
         }
+        
+        .navbar-default .navbar-brand { 
+            background-color: white; transition: background-color 0.3s; 
+        }
+
+        .navbar-default .navbar-brand:hover {
+            background-color: lightgray; 
+        }
+
     </style>
    
 </head>
