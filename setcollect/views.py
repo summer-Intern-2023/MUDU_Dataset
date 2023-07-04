@@ -82,10 +82,10 @@ def info_edit(request, nid):
 #--data collection--#
 def question_list(request):
     #get all datas in sql
-    data_list = Question.objects.all()
+    questions = Question.objects.prefetch_related('lmodel_set').all()
     
     #tansform into html and return
-    return render(request,"question_list.html",{"data_list":data_list})
+    return render(request,"question_list.html",{"questions": questions})
 
 def question_add(request):
     if request.method == "GET":
