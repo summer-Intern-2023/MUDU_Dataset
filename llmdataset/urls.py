@@ -38,4 +38,7 @@ urlpatterns = [
     path('question/delete/', views.question_delete),
     path('question/<int:nid>/edit/', views.question_edit),
     
+    #label manage
+    path('label/list/', views.label_list),
+    path('label/add/', views.label_add),
 ]
