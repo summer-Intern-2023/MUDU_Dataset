@@ -156,7 +156,7 @@ def question_edit(request, nid):
 
 def label_list(request):
     #get all datas in sql
-    data_list = Tag.objects.prefetch_related("question_set").all()
+    data_list = Tag.objects.all()
 
     print(data_list)
     
@@ -171,3 +171,9 @@ def label_add(request):
     Tag.objects.create(tag_name = tag_name)
 
     return redirect("http://127.0.0.1:8000/label/list/")
+
+
+def label_delete(request):
+    nid = request.GET.get('nid')
+    Tag.objects.filter(id = nid).delete()
+    return redirect("http://127.0.0.1:8000/label/list/") 
