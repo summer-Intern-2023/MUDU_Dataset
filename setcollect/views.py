@@ -56,8 +56,9 @@ def info_add(request):
     
     user = request.POST.get("user")
     pwd = request.POST.get("pwd")
+    role = request.POST.get("role")
 
-    UserInfo.objects.create(name = user, password = pwd)
+    UserInfo.objects.create(name = user, password = pwd, role = role)
     return redirect("http://127.0.0.1:8000/info/list/")
 
 def info_delete(request):
