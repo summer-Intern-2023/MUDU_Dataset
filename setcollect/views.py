@@ -1,9 +1,9 @@
 from django.shortcuts import render, HttpResponse, redirect
 import django.http
-
 from setcollect.models import UserInfo, Question, LModel, Tag
 from django import forms
 
+http_address = 'http://127.0.0.1:8000/'
 class LoginForm(forms.Form):
     username = forms.CharField(
         label="用户名",
@@ -38,7 +38,7 @@ def login(request):
             return render(request, "login.html",{'form':form})
 
         request.session["info"] = {'id':user_object.id, 'name':user_object.name}
-        return redirect('http://127.0.0.1:8000/info/main')
+        return redirect(http_address + 'info/main')
     
 
 
@@ -58,12 +58,12 @@ def info_add(request):
     pwd = request.POST.get("pwd")
 
     UserInfo.objects.create(name = user, password = pwd)
-    return redirect("http://127.0.0.1:8000/info/list/")
+    return redirect(http_address + "info/list/")
 
 def info_delete(request):
     nid = request.GET.get('nid')
     UserInfo.objects.filter(id = nid).delete()
-    return redirect("http://127.0.0.1:8000/info/list/") 
+    return redirect(http_address + "info/list/") 
 
 def info_edit(request, nid):
     if request.method == "GET":
@@ -75,7 +75,7 @@ def info_edit(request, nid):
     UserInfo.objects.filter(id=nid).update(name=user)
     UserInfo.objects.filter(id=nid).update(password=pwd)
 
-    return redirect("http://127.0.0.1:8000/info/list/")
+    return redirect(http_address + "info/list/")
 
 #---#
 
@@ -111,12 +111,12 @@ def question_add(request):
         tag, created = Tag.objects.get_or_create(tag_name=tag_name)
         tag.question.add(question)
     
-    return redirect("http://127.0.0.1:8000/question/list/")
+    return redirect(http_address + "question/list/")
 
 def question_delete(request):
     nid = request.GET.get('nid')
     Question.objects.filter(id = nid).delete()
-    return redirect("http://127.0.0.1:8000/question/list/")
+    return redirect(http_address + "question/list/")
 
 def question_edit(request, nid):
     if request.method == "GET":
@@ -138,4 +138,4 @@ def question_edit(request, nid):
         tag, created = Tag.objects.get_or_create(tag_name=tag_name)
         tag.question.add(question)
 
-    return redirect("http://127.0.0.1:8000/question/list/")
+    return redirect(http_address + "question/list/")
