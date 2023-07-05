@@ -13,6 +13,19 @@
             value="{% for tag in row_object.tag_set.all %}{{ tag.tag_name }} {% endfor %}">
     </div>
     <div>
+        <label for="lmodel">Language Model:</label>
+        <select id="lmodel" name="lmodel">
+            <option value="1" {% if row_object.lmodel==1 %}selected{% endif %}>chatGPT</option>
+            <option value="2" {% if row_object.lmodel==2 %}selected{% endif %}>chatGLM</option>
+            <option value="3" {% if row_object.lmodel==3 %}selected{% endif %}>bard</option>
+        </select>
+
+    </div>
+    <div>
+        <label for="answer">Answer:</label>
+        <input id="answer" type="text" name="answer" value="{{ row_object.answer }}">
+    </div>
+    <div>
         <input type="submit" value="Submit">
     </div>
 </form>

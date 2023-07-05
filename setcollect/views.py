@@ -111,21 +111,6 @@ def info_edit(request, nid):
     UserInfo.objects.filter(id=nid).update(name=user, password=pwd, role=role)
 
     return redirect(http_address + "info/list/")
-# def info_edit(request, nid):
-    
-    # if request.method == "GET":
-    #     row_object = UserInfo.objects.filter(id = nid).first()
-    #     return render(request, 'info_edit.html', {"row_object":row_object})
-    
-    # user = request.POST.get("user")
-    # pwd = request.POST.get("pwd")
-    # role = request.POST.get("role")
-    
-    # UserInfo.objects.filter(id=nid).update(name=user)
-    # UserInfo.objects.filter(id=nid).update(password=pwd)
-    # UserInfo.objects.filter(id=nid).update(role=role)
-    
-    # return redirect(http_address + "info/list/")
 
 def user_list(request):
     #get all datas in sql
@@ -199,6 +184,10 @@ def question_edit(request, nid):
         tag, created = Tag.objects.get_or_create(tag_name=tag_name)
         tag.question.add(question)
 
+    lmodel_choice = request.POST.get("lmodel")
+    answer = request.POST.get("answer")
+    LModel.objects.filter(question=question).update(lmodel=lmodel_choice, answer=answer)
+
     return redirect(http_address + "question/list/")
 
 
@@ -218,7 +207,6 @@ def label_add(request):
     Tag.objects.create(tag_name = tag_name)
 
     return redirect(http_address + "label/list/")
-
 
 def label_delete(request):
     nid = request.GET.get('nid')
