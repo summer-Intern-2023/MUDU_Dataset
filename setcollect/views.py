@@ -73,9 +73,12 @@ def info_edit(request, nid):
     
     user = request.POST.get("user")
     pwd = request.POST.get("pwd")
+    role = request.POST.get("role")
+    
     UserInfo.objects.filter(id=nid).update(name=user)
     UserInfo.objects.filter(id=nid).update(password=pwd)
-
+    UserInfo.objects.filter(id=nid).update(role=role)
+    
     return redirect("http://127.0.0.1:8000/info/list/")
 
 def user_list(request):
