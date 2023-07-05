@@ -1,9 +1,10 @@
 from django.shortcuts import render, HttpResponse, redirect
 import django.http
-
+from django.db.models import Count
 from setcollect.models import UserInfo, Question, LModel, Tag
 from django import forms
 
+http_address = 'http://127.0.0.1:8000/'
 class LoginForm(forms.Form):
     username = forms.CharField(
         label="用户名",
@@ -38,7 +39,7 @@ def login(request):
             return render(request, "login.html",{'form':form})
 
         request.session["info"] = {'id':user_object.id, 'name':user_object.name}
-        return redirect('http://127.0.0.1:8000/info/main')
+        return redirect(http_address + 'info/main')
     
 
 
@@ -59,12 +60,12 @@ def info_add(request):
     role = request.POST.get("role")
 
     UserInfo.objects.create(name = user, password = pwd, role = role)
-    return redirect("http://127.0.0.1:8000/info/list/")
+    return redirect(http_address + "info/list/")
 
 def info_delete(request):
     nid = request.GET.get('nid')
     UserInfo.objects.filter(id = nid).delete()
-    return redirect("http://127.0.0.1:8000/info/list/") 
+    return redirect(http_address + "info/list/") 
 
 def info_edit(request, nid):
     if request.method == "GET":
@@ -73,10 +74,13 @@ def info_edit(request, nid):
     
     user = request.POST.get("user")
     pwd = request.POST.get("pwd")
+    role = request.POST.get("role")
+    
     UserInfo.objects.filter(id=nid).update(name=user)
     UserInfo.objects.filter(id=nid).update(password=pwd)
-
-    return redirect("http://127.0.0.1:8000/info/list/")
+    UserInfo.objects.filter(id=nid).update(role=role)
+    
+    return redirect(http_address + "info/list/")
 
 def user_list(request):
     #get all datas in sql
@@ -107,7 +111,7 @@ def question_add(request):
     
     question_text = request.POST.get("question")
     tag_names = request.POST.getlist("tag_name")
-    tag_names = tag_names[0].split(" ")
+    tag_names = tag_names[0].split()
     print(tag_names)
     
     question = Question.objects.create(question = question_text)
@@ -123,12 +127,12 @@ def question_add(request):
         tag, created = Tag.objects.get_or_create(tag_name=tag_name)
         tag.question.add(question)
     
-    return redirect("http://127.0.0.1:8000/question/list/")
+    return redirect(http_address + "question/list/")
 
 def question_delete(request):
     nid = request.GET.get('nid')
     Question.objects.filter(id = nid).delete()
-    return redirect("http://127.0.0.1:8000/question/list/")
+    return redirect(http_address + "question/list/")
 
 def question_edit(request, nid):
     if request.method == "GET":
@@ -141,7 +145,7 @@ def question_edit(request, nid):
     question = Question.objects.get(id=nid)
 
     tag_names = request.POST.getlist("tag_name")
-    tag_names = tag_names[0].split(" ")
+    tag_names = tag_names[0].split()
 
     # Remove all existing tags for the question
     question.tag_set.clear()
@@ -150,17 +154,15 @@ def question_edit(request, nid):
         tag, created = Tag.objects.get_or_create(tag_name=tag_name)
         tag.question.add(question)
 
-    return redirect("http://127.0.0.1:8000/question/list/")
+    return redirect(http_address + "question/list/")
 
 
 #--label collection--#
 
 def label_list(request):
     #get all datas in sql
-    data_list = Tag.objects.all()
+    data_list = Tag.objects.annotate(num_questions=Count('question')).all()
 
-    print(data_list)
-    
     #tansform into html and return
     return render(request,"label_list.html",{"data_list":data_list})
 
@@ -171,10 +173,14 @@ def label_add(request):
     tag_name = request.POST.get("tag_name")
     Tag.objects.create(tag_name = tag_name)
 
-    return redirect("http://127.0.0.1:8000/label/list/")
+    return redirect(http_address + "label/list/")
 
 
 def label_delete(request):
     nid = request.GET.get('nid')
     Tag.objects.filter(id = nid).delete()
-    return redirect("http://127.0.0.1:8000/label/list/") 
+    return redirect(http_address + "label/list/")
+
+
+
+
