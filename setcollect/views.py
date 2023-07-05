@@ -16,8 +16,6 @@ class LoginForm(forms.Form):
         widget=forms.TextInput(attrs={"class": "form-control"}),
         required=True
         )
-    
-    
 
 #---#
 def info_main(request):
@@ -158,7 +156,6 @@ def question_edit(request, nid):
 
 
 #--label collection--#
-
 def label_list(request):
     #get all datas in sql
     data_list = Tag.objects.annotate(num_questions=Count('question')).all()
