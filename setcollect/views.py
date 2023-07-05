@@ -5,14 +5,15 @@ from setcollect.models import UserInfo, Question, LModel, Tag
 from django import forms
 
 http_address = 'http://127.0.0.1:8000/'
+
 class LoginForm(forms.Form):
     username = forms.CharField(
-        label="用户名",
+        label="User name",
         widget=forms.TextInput(attrs={"class": "form-control"}),
         required=True
         )
     password = forms.CharField(
-        label="密码",
+        label="Password",
         widget=forms.TextInput(attrs={"class": "form-control"}),
         required=True
         )
@@ -32,8 +33,8 @@ def login(request):
         user_object = UserInfo.objects.filter(name = form.cleaned_data['username'], password = form.cleaned_data['password']).first()
         
         if not user_object:
-            form.add_error("username", "用户名错误")
-            form.add_error("password", "密码错误")
+            form.add_error("username", "Username error")
+            form.add_error("password", "Password error")
             return render(request, "login.html",{'form':form})
 
         request.session["info"] = {'id':user_object.id, 'name':user_object.name}
