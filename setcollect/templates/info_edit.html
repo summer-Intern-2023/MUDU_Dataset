@@ -29,7 +29,6 @@
                             <option value="2">用户</option>
                             <option value="1">管理员</option>
                         </select>
-                        {% comment %} <input type="text" class="form-control" name="role" value="{{ row_object.role }}"> {% endcomment %}
                     </div>
                 </div>
                 <div class="form-group">
@@ -37,7 +36,16 @@
                         <button type="submit" class="btn btn-primary">完成更改</button>
                     </div>
                 </div>
+                {% if messages %}
+                    <div class="alert alert-danger" role="alert">
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
             </form>
+
 
 
         </div>
