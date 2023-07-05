@@ -77,6 +77,17 @@ def info_edit(request, nid):
 
     return redirect("http://127.0.0.1:8000/info/list/")
 
+def user_list(request):
+    #get all datas in sql
+    data_list = Question.objects.prefetch_related("lmodel_set").all()
+    for data in data_list:    
+        print(data)
+        
+    
+    #tansform into html and return
+    return render(request,"user_list.html",{"data_list":data_list})
+    
+
 #---#
 
 #--data collection--#
@@ -131,15 +142,22 @@ def question_edit(request, nid):
     return redirect("http://127.0.0.1:8000/question/list/")
 
 
-
 #--label collection--#
 
 def label_list(request):
     #get all datas in sql
     data_list = Tag.objects.prefetch_related("question_set").all()
 
+    print(data_list)
     
     #tansform into html and return
-    return render(request,"question_list.html",{"data_list":data_list})
+    return render(request,"label_list.html",{"data_list":data_list})
 
+def label_add(request):
+    if request.method == "GET":
+        return render(request, 'label_add.html')
 
+    tag_name = request.POST.get("tag_name")
+    Tag.objects.create(tag_name = tag_name)
+
+    return redirect("http://127.0.0.1:8000/label/list/")

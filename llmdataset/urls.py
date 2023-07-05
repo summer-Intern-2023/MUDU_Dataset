@@ -30,6 +30,7 @@ urlpatterns = [
     path('info/delete/', views.info_delete),
     path('info/<int:nid>/edit/', views.info_edit),
     path('info/main/', views.info_main),
+    path('user/list/', views.user_list),
 
     #question manage
     path('question/list/', views.question_list),
@@ -39,4 +40,6 @@ urlpatterns = [
     
     #label manage
     path('label/list/', views.label_list),
+    path('label/add/', views.label_add),
+    
 ]

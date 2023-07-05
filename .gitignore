@@ -1,2 +1,6 @@
 static/
+<<<<<<< HEAD
 *sqlite3
+=======
+*.sqlite3
+>>>>>>> f9780d4274d34cfc61d92eb78f67a4f8db47671d

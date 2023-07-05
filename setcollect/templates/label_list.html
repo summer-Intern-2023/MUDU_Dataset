@@ -5,9 +5,9 @@
 <div>
     <div class="container">
         <div style="margin-bottom: 10px;">
-            <a class="btn btn-success" href="http://127.0.0.1:8000/question/add/">
+            <a class="btn btn-success" href="http://127.0.0.1:8000/label/add/">
                 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                新建Q&A
+                新建标签
             </a>
         </div>
 
@@ -31,33 +31,31 @@
                 </thead>
                 <tbody>
                     {% for obj in data_list %}
-                    {% for lmodel in obj.question.all %}
+                    {% for question in obj.question_set.all %}
                     <tr>
                         <td>{{ obj.id }}</td>
                         <td>{{ obj.tag_name }}</td>
                         <td>
-                            {% for tag in obj.tag_set.all %}
-                            {{ tag.tag_name }}
+                            {% for question in obj.question_set.all %}
+                            {{ question.question }}
                             {% empty %}
                             No tags for this question.
                             {% endfor %}
                         </td>
-                        <td>{{ lmodel.get_lmodel_display }}</td>
-                        <td>{{ lmodel.answer }}</td>
                         <td>
                             <a class="btn btn-primary btn-xs"
-                                href="http://127.0.0.1:8000/question/{{ obj.id }}/edit/">编辑</a>
+                                href="http://127.0.0.1:8000/label/{{ obj.id }}/edit/">编辑</a>
                             <a class="btn btn-danger btn-xs"
-                                href="http://127.0.0.1:8000/question/delete/?nid={{obj.id}}">删除</a>
+                                href="http://127.0.0.1:8000/label/delete/?nid={{obj.id}}">删除</a>
                         </td>
                     </tr>
                     {% empty %}
                     <tr>
                         <td>{{ obj.id }}</td>
-                        <td>{{ obj.question }}</td>
+                        <td>{{ obj.tag_name }}</td>
                         <td>
-                            {% for tag in obj.tag_set.all %}
-                            {{ tag.tag_name }}
+                            {% for question in obj.question_set.all %}
+                            {{ question.question }}
                             {% empty %}
                             No tags for this question.
                             {% endfor %}
@@ -65,9 +63,9 @@
                         <td colspan="2">No answers for this question.</td>
                         <td>
                             <a class="btn btn-primary btn-xs"
-                                href="http://127.0.0.1:8000/question/{{ obj.id }}/edit/">编辑</a>
+                                href="http://127.0.0.1:8000/label/{{ obj.id }}/edit/">编辑</a>
                             <a class="btn btn-danger btn-xs"
-                                href="http://127.0.0.1:8000/question/delete/?nid={{obj.id}}">删除</a>
+                                href="http://127.0.0.1:8000/label/delete/?nid={{obj.id}}">删除</a>
                         </td>
                     </tr>
                     {% endfor %}
