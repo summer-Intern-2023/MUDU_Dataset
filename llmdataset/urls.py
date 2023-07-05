@@ -41,4 +41,6 @@ urlpatterns = [
     #label manage
     path('label/list/', views.label_list),
     path('label/add/', views.label_add),
+    path('label/delete/', views.label_delete),
+    
 ]

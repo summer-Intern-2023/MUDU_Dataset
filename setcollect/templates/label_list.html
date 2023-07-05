@@ -25,51 +25,21 @@
                     <tr>
                         <th>ID</th>
                         <th>Tags</th>
-                        <th>问题</th>
                         <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for obj in data_list %}
-                    {% for question in obj.question_set.all %}
+                    {% for tag in data_list %}
                     <tr>
-                        <td>{{ obj.id }}</td>
-                        <td>{{ obj.tag_name }}</td>
+                        <td>{{ tag.id }}</td>
+                        <td>{{ tag.tag_name }}</td>
                         <td>
-                            {% for question in obj.question_set.all %}
-                            {{ question.question }}
-                            {% empty %}
-                            No tags for this question.
-                            {% endfor %}
-                        </td>
-                        <td>
-                            <a class="btn btn-primary btn-xs"
-                                href="http://127.0.0.1:8000/label/{{ obj.id }}/edit/">编辑</a>
+                            {% comment %} <a class="btn btn-primary btn-xs"
+                                href="http://127.0.0.1:8000/label/{{ obj.id }}/edit/">编辑</a> {% endcomment %}
                             <a class="btn btn-danger btn-xs"
-                                href="http://127.0.0.1:8000/label/delete/?nid={{obj.id}}">删除</a>
+                                href="http://127.0.0.1:8000/label/delete/?nid={{tag.id}}">删除</a>
                         </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td>{{ obj.id }}</td>
-                        <td>{{ obj.tag_name }}</td>
-                        <td>
-                            {% for question in obj.question_set.all %}
-                            {{ question.question }}
-                            {% empty %}
-                            No tags for this question.
-                            {% endfor %}
-                        </td>
-                        <td colspan="2">No answers for this question.</td>
-                        <td>
-                            <a class="btn btn-primary btn-xs"
-                                href="http://127.0.0.1:8000/label/{{ obj.id }}/edit/">编辑</a>
-                            <a class="btn btn-danger btn-xs"
-                                href="http://127.0.0.1:8000/label/delete/?nid={{obj.id}}">删除</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                    {% endfor %}
+                        {% endfor %}
                 </tbody>
             </table>
 

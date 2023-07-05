@@ -37,7 +37,7 @@
                             <td>{{ obj.id }}</td>
                             <td>{{ obj.name }}</td>
                             <td>{{ obj.password }}</td>
-                            <td>{{ obj.role }}</td>
+                            <td>{{ obj.get_role_display }}</td>
                             <td>
                                 <a class="btn btn-primary btn-xs"
                                     href="http://127.0.0.1:8000/info/{{ obj.id }}/edit/">编辑</a>

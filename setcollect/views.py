@@ -56,8 +56,9 @@ def info_add(request):
     
     user = request.POST.get("user")
     pwd = request.POST.get("pwd")
+    role = request.POST.get("role")
 
-    UserInfo.objects.create(name = user, password = pwd)
+    UserInfo.objects.create(name = user, password = pwd, role = role)
     return redirect("http://127.0.0.1:8000/info/list/")
 
 def info_delete(request):
@@ -105,10 +106,10 @@ def question_add(request):
         return render(request, 'question_add.html')
     
     question_text = request.POST.get("question")
-    tag_names = request.POST.getlist("tag_names")
+    tag_names = request.POST.getlist("tag_name")
+    tag_names = tag_names[0].split(" ")
+    print(tag_names)
     
-
-
     question = Question.objects.create(question = question_text)
 
     lmodel_choice = request.POST.get("lmodel")
@@ -119,8 +120,8 @@ def question_add(request):
 
     # Create the tag
     for tag_name in tag_names:
-        tag, _ = Tag.objects.get_or_create(name=tag_name, question=question)
-        tag.save()
+        tag, created = Tag.objects.get_or_create(tag_name=tag_name)
+        tag.question.add(question)
     
     return redirect("http://127.0.0.1:8000/question/list/")
 
@@ -132,12 +133,22 @@ def question_delete(request):
 def question_edit(request, nid):
     if request.method == "GET":
         row_object = Question.objects.filter(id = nid).first()
-        return render(request, 'question_edit.html', {"row_object":row_object})
+        return render(request, 'question_edit.html', {"row_object": row_object})
     
-    question = request.POST.get("question")
-    tag_name = request.POST.get("tag_name")
-    Question.objects.filter(id=nid).update(question=question)
-    Question.objects.filter(id=nid).update(tag_name=tag_name)
+    question_text = request.POST.get("question")
+    # Get the question instance after updating
+    Question.objects.filter(id=nid).update(question=question_text)
+    question = Question.objects.get(id=nid)
+
+    tag_names = request.POST.getlist("tag_name")
+    tag_names = tag_names[0].split(" ")
+
+    # Remove all existing tags for the question
+    question.tag_set.clear()
+
+    for tag_name in tag_names:
+        tag, created = Tag.objects.get_or_create(tag_name=tag_name)
+        tag.question.add(question)
 
     return redirect("http://127.0.0.1:8000/question/list/")
 
@@ -146,7 +157,7 @@ def question_edit(request, nid):
 
 def label_list(request):
     #get all datas in sql
-    data_list = Tag.objects.prefetch_related("question_set").all()
+    data_list = Tag.objects.all()
 
     print(data_list)
     
@@ -161,3 +172,9 @@ def label_add(request):
     Tag.objects.create(tag_name = tag_name)
 
     return redirect("http://127.0.0.1:8000/label/list/")
+
+
+def label_delete(request):
+    nid = request.GET.get('nid')
+    Tag.objects.filter(id = nid).delete()
+    return redirect("http://127.0.0.1:8000/label/list/") 
