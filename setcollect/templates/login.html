@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>用户登录</title>
+    <title>User log in</title>
     <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1-dist/css/bootstrap.css' %}">
     <style>
         .account {
@@ -30,22 +30,22 @@
 
 <body>
     <div class="account">
-        <h2>用户登录</h2>
+        <h2>User log in</h2>
         <form method="post" novalidate>
             {% csrf_token %}
             <div class="form-group">
-                <label>用户名</label>
+                <label>User name</label>
                 {{ form.username }}
                 <span style="color: red;">{{ form.username.errors.0 }}</span>
             </div>
 
             <div class="form-group">
-                <label>密码</label>
+                <label>Password</label>
                 {{ form.password }}
                 <span style="color: red;">{{ form.password.errors.0 }}</span>
             </div>
 
-            <input type="submit" value="登 录" class="btn btn-primary">
+            <input type="submit" value="log in" class="btn btn-primary">
         </form>
     </div>
 

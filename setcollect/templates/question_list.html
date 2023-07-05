@@ -7,7 +7,7 @@
         <div style="margin-bottom: 10px;">
             <a class="btn btn-success" href="http://127.0.0.1:8000/question/add/">
                 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                新建Q&A
+                Create new question
             </a>
         </div>
 
@@ -15,7 +15,7 @@
             <!-- Default panel contents -->
             <div class="panel-heading">
                 <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                问题列表
+                question list
             </div>
 
 
@@ -24,11 +24,11 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>问题</th>
-                        <th>Tags</th>
-                        <th>模型</th>
-                        <th>回答</th>
-                        <th>操作</th>
+                        <th>Question</th>
+                        <th>Labels</th>
+                        <th>Model</th>
+                        <th>Answer</th>
+                        <th>Edit</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,9 +48,9 @@
                         <td>{{ lmodel.answer }}</td>
                         <td>
                             <a class="btn btn-primary btn-xs"
-                                href="http://127.0.0.1:8000/question/{{ obj.id }}/edit/">编辑</a>
+                                href="http://127.0.0.1:8000/question/{{ obj.id }}/edit/">Edit</a>
                             <a class="btn btn-danger btn-xs"
-                                href="http://127.0.0.1:8000/question/delete/?nid={{obj.id}}">删除</a>
+                                href="http://127.0.0.1:8000/question/delete/?nid={{obj.id}}">Delete</a>
                         </td>
                     </tr>
                     {% empty %}
@@ -67,9 +67,9 @@
                         <td colspan="2">No answers for this question.</td>
                         <td>
                             <a class="btn btn-primary btn-xs"
-                                href="http://127.0.0.1:8000/question/{{ obj.id }}/edit/">编辑</a>
+                                href="http://127.0.0.1:8000/question/{{ obj.id }}/edit/">Edit</a>
                             <a class="btn btn-danger btn-xs"
-                                href="http://127.0.0.1:8000/question/delete/?nid={{obj.id}}">删除</a>
+                                href="http://127.0.0.1:8000/question/delete/?nid={{obj.id}}">Delete</a>
                         </td>
                     </tr>
                     {% endfor %}
