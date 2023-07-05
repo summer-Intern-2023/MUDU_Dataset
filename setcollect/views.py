@@ -132,6 +132,14 @@ def question_edit(request, nid):
 
 
 
+#--label collection--#
 
+def label_list(request):
+    #get all datas in sql
+    data_list = Tag.objects.prefetch_related("question_set").all()
+
+    
+    #tansform into html and return
+    return render(request,"question_list.html",{"data_list":data_list})
 
 
