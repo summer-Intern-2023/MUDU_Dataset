@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 import django.http
+from django.db.models import Count
 from setcollect.models import UserInfo, Question, LModel, Tag
 from django import forms
 
@@ -107,7 +108,7 @@ def question_add(request):
     
     question_text = request.POST.get("question")
     tag_names = request.POST.getlist("tag_name")
-    tag_names = tag_names[0].split(" ")
+    tag_names = tag_names[0].split()
     print(tag_names)
     
     question = Question.objects.create(question = question_text)
@@ -141,7 +142,7 @@ def question_edit(request, nid):
     question = Question.objects.get(id=nid)
 
     tag_names = request.POST.getlist("tag_name")
-    tag_names = tag_names[0].split(" ")
+    tag_names = tag_names[0].split()
 
     # Remove all existing tags for the question
     question.tag_set.clear()
@@ -157,10 +158,8 @@ def question_edit(request, nid):
 
 def label_list(request):
     #get all datas in sql
-    data_list = Tag.objects.all()
+    data_list = Tag.objects.annotate(num_questions=Count('question')).all()
 
-    print(data_list)
-    
     #tansform into html and return
     return render(request,"label_list.html",{"data_list":data_list})
 
@@ -178,5 +177,7 @@ def label_delete(request):
     nid = request.GET.get('nid')
     Tag.objects.filter(id = nid).delete()
     return redirect(http_address + "label/list/")
+
+
 
 

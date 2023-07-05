@@ -25,6 +25,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Tags</th>
+                        <th>number of tag</th>
                         <th>操作</th>
                     </tr>
                 </thead>
@@ -33,6 +34,7 @@
                     <tr>
                         <td>{{ tag.id }}</td>
                         <td>{{ tag.tag_name }}</td>
+                        <td>{{ tag.num_questions }}</td>
                         <td>
                             {% comment %} <a class="btn btn-primary btn-xs"
                                 href="http://127.0.0.1:8000/label/{{ obj.id }}/edit/">编辑</a> {% endcomment %}
