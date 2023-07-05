@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div>
+    <div class="container">
+        <div style="margin-bottom: 10px;">
+            <a class="btn btn-success" href="http://127.0.0.1:8000/label/add/">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                新建标签
+            </a>
+        </div>
+
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                问题列表
+            </div>
+
+
+            <!-- Table -->
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tags</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tag in data_list %}
+                    <tr>
+                        <td>{{ tag.id }}</td>
+                        <td>{{ tag.tag_name }}</td>
+                        <td>
+                            {% comment %} <a class="btn btn-primary btn-xs"
+                                href="http://127.0.0.1:8000/label/{{ obj.id }}/edit/">编辑</a> {% endcomment %}
+                            <a class="btn btn-danger btn-xs"
+                                href="http://127.0.0.1:8000/label/delete/?nid={{tag.id}}">删除</a>
+                        </td>
+                        {% endfor %}
+                </tbody>
+            </table>
+
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

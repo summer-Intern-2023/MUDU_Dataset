@@ -56,8 +56,9 @@ def info_add(request):
     
     user = request.POST.get("user")
     pwd = request.POST.get("pwd")
+    role = request.POST.get("role")
 
-    UserInfo.objects.create(name = user, password = pwd)
+    UserInfo.objects.create(name = user, password = pwd, role = role)
     return redirect(http_address + "info/list/")
 
 def info_delete(request):
@@ -76,6 +77,17 @@ def info_edit(request, nid):
     UserInfo.objects.filter(id=nid).update(password=pwd)
 
     return redirect(http_address + "info/list/")
+
+def user_list(request):
+    #get all datas in sql
+    data_list = Question.objects.prefetch_related("lmodel_set").all()
+    for data in data_list:    
+        print(data)
+        
+    
+    #tansform into html and return
+    return render(request,"user_list.html",{"data_list":data_list})
+    
 
 #---#
 
@@ -139,3 +151,32 @@ def question_edit(request, nid):
         tag.question.add(question)
 
     return redirect(http_address + "question/list/")
+
+
+#--label collection--#
+
+def label_list(request):
+    #get all datas in sql
+    data_list = Tag.objects.all()
+
+    print(data_list)
+    
+    #tansform into html and return
+    return render(request,"label_list.html",{"data_list":data_list})
+
+def label_add(request):
+    if request.method == "GET":
+        return render(request, 'label_add.html')
+
+    tag_name = request.POST.get("tag_name")
+    Tag.objects.create(tag_name = tag_name)
+
+    return redirect(http_address + "label/list/")
+
+
+def label_delete(request):
+    nid = request.GET.get('nid')
+    Tag.objects.filter(id = nid).delete()
+    return redirect(http_address + "label/list/")
+
+
