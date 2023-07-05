@@ -111,21 +111,6 @@ def info_edit(request, nid):
     UserInfo.objects.filter(id=nid).update(name=user, password=pwd, role=role)
 
     return redirect(http_address + "info/list/")
-# def info_edit(request, nid):
-    
-    # if request.method == "GET":
-    #     row_object = UserInfo.objects.filter(id = nid).first()
-    #     return render(request, 'info_edit.html', {"row_object":row_object})
-    
-    # user = request.POST.get("user")
-    # pwd = request.POST.get("pwd")
-    # role = request.POST.get("role")
-    
-    # UserInfo.objects.filter(id=nid).update(name=user)
-    # UserInfo.objects.filter(id=nid).update(password=pwd)
-    # UserInfo.objects.filter(id=nid).update(role=role)
-    
-    # return redirect(http_address + "info/list/")
 
 def user_list(request):
     #get all datas in sql
@@ -155,15 +140,28 @@ def question_add(request):
         return render(request, 'question_add.html')
     
     question_text = request.POST.get("question")
-    tag_names = request.POST.getlist("tag_name")
-    tag_names = tag_names[0].split()
+    tag_names = request.POST.get("tag_name")
+    
+    
+    
+    answer = request.POST.get("answer")
+    
+    if not question_text or question_text.strip()=='':
+        messages.error(request, 'Question cannot be empty or only contain spaces！') 
+        return redirect(http_address + f"question/add?answer={answer}&tag_name={tag_names}")
+    
+    if not answer or answer.strip()=='':
+        messages.error(request, 'Answer cannot be empty or only contain spaces！') 
+        return redirect(http_address + f"question/add?question={question_text}&tag_name={tag_names}")
+    
+    tag_names = tag_names.split()
     print(tag_names)
+    
+    
     
     question = Question.objects.create(question = question_text)
 
     lmodel_choice = request.POST.get("lmodel")
-    answer = request.POST.get("answer")
-
     # Create the LModel
     LModel.objects.create(lmodel=lmodel_choice, answer=answer, question=question)
 

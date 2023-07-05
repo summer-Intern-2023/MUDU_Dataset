@@ -18,9 +18,9 @@ class Question(models.Model):
 
 class LModel(models.Model):
     model_choice = (
-        (1, "chatGPT"),
-        (2, "chatGLM"),
-        (3, "bard"),
+        (1, "ChatGPT"),
+        (2, "ChatGLM"),
+        (3, "Bard"),
     )
     
     lmodel = models.SmallIntegerField(verbose_name = "choice of model", choices = model_choice)
