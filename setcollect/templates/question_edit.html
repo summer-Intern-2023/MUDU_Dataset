@@ -1,6 +1,72 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+
+<div>
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Edit Data</h3>
+            </div>
+
+            <form class="form-horizontal" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Question</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="question" placeholder="Question"
+                        value="{{ row_object.question }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Label</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="tag_name" placeholder="Label"
+                        value="{{ request.GET.tag_name }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Model</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="lmodel">
+                            <option value="1">ChatGPT</option>
+                            <option value="2">ChatGLM</option>
+                            <option value="3">Bard</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Answer</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="answer" placeholder="Answer" 
+                        value="{{ request.GET.answer }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary">Edit Complete</button>
+                    </div>
+                </div>
+                {% if messages %}
+                    <div class="alert alert-danger" role="alert">
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+            </form>
+
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% comment %} {% extends 'layout.html' %}
+
+{% block content %}
 <form method="post">
     {% csrf_token %}
     <div>
@@ -16,4 +82,4 @@
         <input type="submit" value="Submit">
     </div>
 </form>
-{% endblock %}
+{% endblock %} {% endcomment %}
