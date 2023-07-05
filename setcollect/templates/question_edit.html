@@ -1,22 +1,19 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-
-<form method="POST">
+<form method="post">
     {% csrf_token %}
-    <div class="form-group">
-        <label for="question">问题:</label>
-        <input type="text" id="question" name="question" value="{{ row_object.question }}" class="form-control">
+    <div>
+        <label for="question">Question:</label>
+        <input id="question" type="text" name="question" value="{{ row_object.question }}">
     </div>
-    <div class="form-group">
-        <label for="tag_name">标签:</label>
-        <input type="text" id="tag_name" name="tag_name" value="{{ row_object.tag_name }}" class="form-control">
+    <div>
+        <label for="tag_name">Tags (separate with spaces):</label>
+        <input id="tag_name" type="text" name="tag_name"
+            value="{% for tag in row_object.tag_set.all %}{{ tag.tag_name }} {% endfor %}">
     </div>
-    <div class="form-group">
-        <label for="tag_name">回答:</label>
-        <input type="text" id="answer" name="answer" value="{{ row_object.answer }}" class="form-control">
+    <div>
+        <input type="submit" value="Submit">
     </div>
-    <button type="submit" class="btn btn-primary">保存</button>
 </form>
-
 {% endblock %}

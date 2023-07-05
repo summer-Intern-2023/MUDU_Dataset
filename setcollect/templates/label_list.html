@@ -39,7 +39,7 @@
                             {% for question in obj.question_set.all %}
                             {{ question.question }}
                             {% empty %}
-                            No tags for this question.
+                            No questions for this tag.
                             {% endfor %}
                         </td>
                         <td>
@@ -57,7 +57,7 @@
                             {% for question in obj.question_set.all %}
                             {{ question.question }}
                             {% empty %}
-                            No tags for this question.
+                            No questions for this tag.
                             {% endfor %}
                         </td>
                         <td colspan="2">No answers for this question.</td>
