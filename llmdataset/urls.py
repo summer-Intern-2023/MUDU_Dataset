@@ -42,5 +42,6 @@ urlpatterns = [
     path('label/list/', views.label_list),
     path('label/add/', views.label_add),
     path('label/delete/', views.label_delete),
-    
+    path('label/search/', views.search_by_label),
+    path('label/search/search/', views.search_search, name='search_search'),
 ]

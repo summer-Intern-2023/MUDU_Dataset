@@ -140,15 +140,26 @@ def question_add(request):
         return render(request, 'question_add.html')
     
     question_text = request.POST.get("question")
-    tag_names = request.POST.getlist("tag_name")
-    tag_names = tag_names[0].split()
-    print(tag_names)
+    tag_names = request.POST.get("tag_name")
+    
+    
+    
+    answer = request.POST.get("answer")
+    
+    if not question_text or question_text.strip()=='':
+        messages.error(request, 'Question cannot be empty or only contain spaces！') 
+        return redirect(http_address + f"question/add?answer={answer}&tag_name={tag_names}")
+    
+    if not answer or answer.strip()=='':
+        messages.error(request, 'Answer cannot be empty or only contain spaces！') 
+        return redirect(http_address + f"question/add?question={question_text}&tag_name={tag_names}")
+    
+    tag_names = tag_names.split()    
+    
     
     question = Question.objects.create(question = question_text)
 
     lmodel_choice = request.POST.get("lmodel")
-    answer = request.POST.get("answer")
-
     # Create the LModel
     LModel.objects.create(lmodel=lmodel_choice, answer=answer, question=question)
 
@@ -213,6 +224,25 @@ def label_delete(request):
     Tag.objects.filter(id = nid).delete()
     return redirect(http_address + "label/list/")
 
+def search_by_label(request):
+    if request.method == "GET":
+        all_tags = Tag.objects.values_list('tag_name', flat=True)
+        return render(request, 'label_search.html', {"all_tags": all_tags})
+    
+    return redirect(http_address + "label/list/")
 
+def search_search(request):
+    if request.method == "GET":
+        search_tag = request.GET.get('tag_name', '')
+        if search_tag:
+            tag = Tag.objects.filter(tag_name__icontains=search_tag).first()
+            if tag:
+                questions = tag.question.all()
+            else:
+                questions = Question.objects.none()  # Return an empty queryset
+        else:
+            questions = Question.objects.none()  # Return an empty queryset
+
+        return render(request, 'search_results.html', {"questions": questions})
 
 
