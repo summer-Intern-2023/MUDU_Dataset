@@ -11,14 +11,12 @@ RUN apt-get update && apt-get install -y python3 python3-pip
 # LABEL maintainer 
 
 WORKDIR /Web_Application_Project
-COPY requirements.txt .
+COPY . /Web_Application_Project
 
 RUN pip3 install -r requirements.txt --break-system-packages
 
 
 EXPOSE 8000
-
-WORKDIR /Web_Application_Project
 
 CMD ["python3", "manage.py", "makemigrations"]
 CMD ["python3", "manage.py", "migrate"]
