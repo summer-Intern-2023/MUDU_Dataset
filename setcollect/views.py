@@ -3,21 +3,22 @@ import django.http
 from django.db.models import Count
 from setcollect.models import UserInfo, Question, LModel, Tag
 from django import forms
-from django.contrib import messages
 
 http_address = 'http://127.0.0.1:8000/'
 
 class LoginForm(forms.Form):
     username = forms.CharField(
-        label="User name",
+        label="用户名",
         widget=forms.TextInput(attrs={"class": "form-control"}),
         required=True
         )
     password = forms.CharField(
-        label="Password",
+        label="密码",
         widget=forms.TextInput(attrs={"class": "form-control"}),
         required=True
         )
+    
+    
 
 #---#
 def info_main(request):
@@ -34,8 +35,8 @@ def login(request):
         user_object = UserInfo.objects.filter(name = form.cleaned_data['username'], password = form.cleaned_data['password']).first()
         
         if not user_object:
-            form.add_error("username", "Username error")
-            form.add_error("password", "Password error")
+            form.add_error("username", "用户名错误")
+            form.add_error("password", "密码错误")
             return render(request, "login.html",{'form':form})
 
         request.session["info"] = {'id':user_object.id, 'name':user_object.name}
@@ -58,58 +59,28 @@ def info_add(request):
     user = request.POST.get("user")
     pwd = request.POST.get("pwd")
     role = request.POST.get("role")
-    
-    if not user or " " in user: 
-        messages.error(request, 'Username cannot be empty or contain spaces！') 
-        return redirect(http_address + f"info/add?pwd={pwd}&role={role}") 
-    
-    if not pwd or " " in pwd: 
-        messages.error(request, 'Password cannot be empty or contain spaces！') 
-        return redirect(http_address + f"info/add?user={user}&role={role}")
-    
-    # 检查用户名是否已存在
-    existing_user = UserInfo.objects.filter(name=user).first()
-    if existing_user:
-        messages.error(request, 'Username already exist!')
-        return redirect(http_address + f"info/add?user={user}&pwd={pwd}&role={role}") # 重定向回编辑页面
 
-    
-    UserInfo.objects.create(name=user, password=pwd, role=role)
-
+    UserInfo.objects.create(name = user, password = pwd, role = role)
     return redirect(http_address + "info/list/")
-    
 
 def info_delete(request):
     nid = request.GET.get('nid')
     UserInfo.objects.filter(id = nid).delete()
     return redirect(http_address + "info/list/") 
 
-
 def info_edit(request, nid):
     if request.method == "GET":
-        row_object = UserInfo.objects.filter(id=nid).first()
-        return render(request, 'info_edit.html', {"row_object": row_object})
-
+        row_object = UserInfo.objects.filter(id = nid).first()
+        return render(request, 'info_edit.html', {"row_object":row_object})
+    
     user = request.POST.get("user")
     pwd = request.POST.get("pwd")
     role = request.POST.get("role")
     
-    if not user or " " in user: 
-        messages.error(request, 'Username cannot be empty or contain spaces！') 
-        return redirect(http_address + f"info/{nid}/edit/")
+    UserInfo.objects.filter(id=nid).update(name=user)
+    UserInfo.objects.filter(id=nid).update(password=pwd)
+    UserInfo.objects.filter(id=nid).update(role=role)
     
-    if not pwd or " " in pwd: 
-        messages.error(request, 'Password cannot be empty or contain spaces！') 
-        return redirect(http_address + f"info/{nid}/edit/")
-    
-    # 检查用户名是否已存在
-    existing_user = UserInfo.objects.filter(name=user).exclude(id=nid).first()
-    if existing_user:
-        messages.error(request, 'Username already exist!')
-        return redirect(http_address + f"info/{nid}/edit/") # 重定向回编辑页面
-
-    UserInfo.objects.filter(id=nid).update(name=user, password=pwd, role=role)
-
     return redirect(http_address + "info/list/")
 
 def user_list(request):
@@ -203,6 +174,7 @@ def question_edit(request, nid):
 
 
 #--label collection--#
+
 def label_list(request):
     #get all datas in sql
     data_list = Tag.objects.annotate(num_questions=Count('question')).all()
