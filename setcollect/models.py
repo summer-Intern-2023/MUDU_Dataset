@@ -19,8 +19,13 @@ class UserInfo(models.Model):
     role = models.SmallIntegerField(verbose_name="choice of role", choices=role_choice)
 
 
+class Conversation(models.Model):
+    name = models.CharField(max_length=64)
+
+
 class Question(models.Model):
     question = models.TextField()
+    conversation = models.ForeignKey("Conversation", on_delete=models.CASCADE)
 
 
 class LModel(models.Model):
