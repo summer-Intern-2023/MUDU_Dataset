@@ -4,7 +4,7 @@ from django.db.models import Count
 from setcollect.models import UserInfo, Question, LModel, Tag
 from django import forms
 
-http_address = 'http://127.0.0.1:8000/'
+http_address = 'http://192.168.132.168/'
 
 class LoginForm(forms.Form):
     username = forms.CharField(
@@ -33,11 +33,7 @@ def login(request):
     form = LoginForm(data=request.POST)
     if form.is_valid():
         user_object = UserInfo.objects.filter(name = form.cleaned_data['username'], password = form.cleaned_data['password']).first()
-        
-        if not user_object:
-            form.add_error("username", "用户名错误")
-            form.add_error("password", "密码错误")
-            return render(request, "login.html",{'form':form})
+
 
         request.session["info"] = {'id':user_object.id, 'name':user_object.name}
         return redirect(http_address + 'info/main')

@@ -5,7 +5,7 @@
 <div>
     <div class="container">
         <div style="margin-bottom: 10px;">
-            <a class="btn btn-success" href="http://127.0.0.1:8000/question/add/">
+            <a class="btn btn-success" href="http://192.168.132.168/question/add/">
                 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                 Create new question
             </a>
@@ -48,9 +48,9 @@
                         <td>{{ lmodel.answer }}</td>
                         <td>
                             <a class="btn btn-primary btn-xs"
-                                href="http://127.0.0.1:8000/question/{{ obj.id }}/edit/">Edit</a>
+                                href="http://192.168.132.168/question/{{ obj.id }}/edit/">Edit</a>
                             <a class="btn btn-danger btn-xs"
-                                href="http://127.0.0.1:8000/question/delete/?nid={{obj.id}}">Delete</a>
+                                href="http://192.168.132.168/question/delete/?nid={{obj.id}}">Delete</a>
                         </td>
                     </tr>
                     {% empty %}
@@ -67,9 +67,9 @@
                         <td colspan="2">No answers for this question.</td>
                         <td>
                             <a class="btn btn-primary btn-xs"
-                                href="http://127.0.0.1:8000/question/{{ obj.id }}/edit/">Edit</a>
+                                href="http://192.168.132.168/question/{{ obj.id }}/edit/">Edit</a>
                             <a class="btn btn-danger btn-xs"
-                                href="http://127.0.0.1:8000/question/delete/?nid={{obj.id}}">Delete</a>
+                                href="http://192.168.132.168/question/delete/?nid={{obj.id}}">Delete</a>
                         </td>
                     </tr>
                     {% endfor %}
