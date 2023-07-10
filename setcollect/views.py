@@ -6,8 +6,6 @@ from django import forms
 from itertools import groupby
 from operator import attrgetter
 
-http_address = "http://127.0.0.1:8000/"
-
 
 class LoginForm(forms.Form):
     username = forms.CharField(
