@@ -12,13 +12,6 @@
             <form class="form-horizontal" method="post">
                 {% csrf_token %}
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Conversation</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="conversation" placeholder="conversation"
-                            value="{{ request.GET.conversation }}">
-                    </div>
-                </div>
-                <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Question</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="question" placeholder="Question"

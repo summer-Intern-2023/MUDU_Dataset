@@ -160,12 +160,13 @@ def question_list(request):
 
 
 def question_add(request):
+    label_pool = Tag.objects.all()
     if request.method == "GET":
-        return render(request, "question_add.html")
+        return render(request, "question_add.html", {"label_pool": label_pool})
 
     conversation_name = request.POST.get("conversation")
     question_text = request.POST.get("question")
-    tag_names = request.POST.get("tag_name")
+    tag_names = request.POST.getlist("tag_name")
     answer = request.POST.get("answer")
     lmodel_choice = request.POST.get("lmodel")
 
