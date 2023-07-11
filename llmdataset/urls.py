@@ -20,28 +20,27 @@ from django.urls import path
 from setcollect import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    
-
-    #user manage
-    path('login/',views.login),
-    path('info/list/', views.info_list),
-    path('info/add/', views.info_add),
-    path('info/delete/', views.info_delete),
-    path('info/<int:nid>/edit/', views.info_edit),
-    path('info/main/', views.info_main),
-    path('user/list/', views.user_list),
-
-    #question manage
-    path('question/list/', views.question_list),
-    path('question/add/', views.question_add),
-    path('question/delete/', views.question_delete),
-    path('question/<int:nid>/edit/', views.question_edit),
-    
-    #label manage
-    path('label/list/', views.label_list),
-    path('label/add/', views.label_add),
-    path('label/delete/', views.label_delete),
-    path('label/search/', views.search_by_label),
-    path('label/search/search/', views.search_search, name='search_search'),
+    path("admin/", admin.site.urls),
+    # user manage
+    path("login/", views.login),
+    path("info/list/", views.info_list),
+    path("info/add/", views.info_add),
+    path("info/delete/", views.info_delete),
+    path("info/<int:nid>/edit/", views.info_edit),
+    path("info/main/", views.info_main),
+    path("user/list/", views.user_list),
+    # question manage
+    path("question/list/", views.question_list),
+    path("question/add/", views.question_add),
+    path("question/delete/", views.question_delete),
+    path("question/<int:nid>/edit/", views.question_edit),
+    # label manage
+    path("label/list/", views.label_list),
+    path("label/add/", views.label_add),
+    path("label/delete/", views.label_delete),
+    path("label/search/", views.search_by_label),
+    path("label/search/search/", views.search_search, name="search_search"),
+    # title manage
+    path("title/list/", views.title_list),
+    path("title/add/", views.title_add),
 ]
