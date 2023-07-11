@@ -15,15 +15,16 @@
             <!-- Default panel contents -->
             <div class="panel-heading">
                 <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                question list
+                Question list
             </div>
-
 
             <!-- Table -->
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>Conversation ID</th>
+                        <th>Conversation Name</th>
+                        <th>Question ID</th>
                         <th>Question</th>
                         <th>Labels</th>
                         <th>Model</th>
@@ -33,38 +34,24 @@
                 </thead>
                 <tbody>
                     {% for obj in data_list %}
-                    {% for lmodel in obj.lmodel_set.all %}
                     <tr>
+                        <td>{{ obj.conversation.id }}</td>
+                        <td>{{ obj.conversation.name }}</td>
                         <td>{{ obj.id }}</td>
                         <td>{{ obj.question }}</td>
                         <td>
-                            {% for tag in obj.tag_set.all %}
+                            {% for tag in obj.question_tag.all %}
                             {{ tag.tag_name }}
                             {% empty %}
                             No tags for this question.
                             {% endfor %}
                         </td>
+                        {% for lmodel in obj.lmodel_set.all %}
                         <td>{{ lmodel.get_lmodel_display }}</td>
                         <td>{{ lmodel.answer }}</td>
-                        <td>
-                            <a class="btn btn-primary btn-xs"
-                                href="http://127.0.0.1:8000/question/{{ obj.id }}/edit/">Edit</a>
-                            <a class="btn btn-danger btn-xs"
-                                href="http://127.0.0.1:8000/question/delete/?nid={{obj.id}}">Delete</a>
-                        </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td>{{ obj.id }}</td>
-                        <td>{{ obj.question }}</td>
-                        <td>
-                            {% for tag in obj.tag_set.all %}
-                            {{ tag.tag_name }}
-                            {% empty %}
-                            No tags for this question.
-                            {% endfor %}
-                        </td>
+                        {% empty %}
                         <td colspan="2">No answers for this question.</td>
+                        {% endfor %}
                         <td>
                             <a class="btn btn-primary btn-xs"
                                 href="http://127.0.0.1:8000/question/{{ obj.id }}/edit/">Edit</a>
@@ -72,12 +59,9 @@
                                 href="http://127.0.0.1:8000/question/delete/?nid={{obj.id}}">Delete</a>
                         </td>
                     </tr>
-                    {% endfor %}
                     {% endfor %}
                 </tbody>
             </table>
-
-
         </div>
 
     </div>

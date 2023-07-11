@@ -15,14 +15,14 @@
                     <label for="inputEmail3" class="col-sm-2 control-label">Question</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="question" placeholder="Question"
-                        value="{{ row_object.question }}">
+                            value="{{ row_object.question }}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-2 control-label">Label</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="tag_name" placeholder="Label"
-                        value="{{ request.GET.tag_name }}">
+                            value="{% for tag in row_object.question_tag.all %}{{ tag.tag_name }} {% endfor %}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -38,8 +38,8 @@
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-2 control-label">Answer</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="answer" placeholder="Answer" 
-                        value="{{ request.GET.answer }}">
+                        <input type="text" class="form-control" name="answer" placeholder="Answer"
+                            value="{{ row_object.answer }}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -48,51 +48,15 @@
                     </div>
                 </div>
                 {% if messages %}
-                    <div class="alert alert-danger" role="alert">
-                        {% for message in messages %}
-                            {{ message }}
-                        {% endfor %}
-                    </div>
+                <div class="alert alert-danger" role="alert">
+                    {% for message in messages %}
+                    {{ message }}
+                    {% endfor %}
+                </div>
                 {% endif %}
 
             </form>
-
-
-
         </div>
     </div>
 </div>
 {% endblock %}
-
-{% comment %} {% extends 'layout.html' %}
-
-{% block content %}
-<form method="post">
-    {% csrf_token %}
-    <div>
-        <label for="question">Question:</label>
-        <input id="question" type="text" name="question" value="{{ row_object.question }}">
-    </div>
-    <div>
-        <label for="tag_name">Tags (separate with spaces):</label>
-        <input id="tag_name" type="text" name="tag_name"
-            value="{% for tag in row_object.tag_set.all %}{{ tag.tag_name }} {% endfor %}">
-    </div>
-    <div>
-        <label for="lmodel">Language Model:</label>
-        <select id="lmodel" name="lmodel">
-            <option value="1" {% if row_object.lmodel==1 %}selected{% endif %}>chatGPT</option>
-            <option value="2" {% if row_object.lmodel==2 %}selected{% endif %}>chatGLM</option>
-            <option value="3" {% if row_object.lmodel==3 %}selected{% endif %}>bard</option>
-        </select>
-
-    </div>
-    <div>
-        <label for="answer">Answer:</label>
-        <input id="answer" type="text" name="answer" value="{{ row_object.answer }}">
-    </div>
-    <div>
-        <input type="submit" value="Submit">
-    </div>
-</form>
-{% endblock %} {% endcomment %}
