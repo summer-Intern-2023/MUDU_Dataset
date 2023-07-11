@@ -1,5 +1,4 @@
 from django.shortcuts import render, HttpResponse, redirect
-import django.http
 from django.db.models import Count
 from setcollect.models import UserInfo, Conversation, Question, LModel, Tag
 from django import forms
@@ -130,14 +129,9 @@ def user_list(request):
 
 # --data collection--#
 def question_list(request):
-    # data_list = Question.objects.all().prefetch_related(
-    #     "tag_set", "lmodel_set", "conversation"
-    # )
-
-    # return render(request, "question_list.html", {"data_list": data_list})
     questions = (
         Question.objects.all()
-        .prefetch_related("tag_set", "lmodel_set", "conversation")
+        .prefetch_related("question_tag", "lmodel_set", "conversation")
         .order_by("conversation__id")
     )
 
@@ -159,6 +153,7 @@ def question_list(request):
     return render(request, "question_list.html", {"data_list": data_list})
 
 
+
 def question_add(request):
     label_pool = Tag.objects.all()
     if request.method == "GET":
@@ -166,7 +161,7 @@ def question_add(request):
 
     conversation_name = request.POST.get("conversation")
     question_text = request.POST.get("question")
-    tag_names = request.POST.getlist("tag_name")
+    tag_names = request.POST.get("tag_name")
     answer = request.POST.get("answer")
     lmodel_choice = request.POST.get("lmodel")
 
@@ -197,7 +192,7 @@ def question_add(request):
     # Create the tag
     for tag_name in tag_names:
         tag, created = Tag.objects.get_or_create(tag_name=tag_name)
-        tag.question.add(question)
+        question.question_tag.add(tag)
 
     return redirect(http_address + "question/list/")
 
@@ -222,11 +217,11 @@ def question_edit(request, nid):
     tag_names = tag_names[0].split()
 
     # Remove all existing tags for the question
-    question.tag_set.clear()
+    question.question_tag.clear()
 
     for tag_name in tag_names:
         tag, created = Tag.objects.get_or_create(tag_name=tag_name)
-        tag.question.add(question)
+        question.question_tag.add(tag)
 
     lmodel_choice = request.POST.get("lmodel")
     answer = request.POST.get("answer")

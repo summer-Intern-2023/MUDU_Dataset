@@ -40,7 +40,7 @@
                         <td>{{ obj.id }}</td>
                         <td>{{ obj.question }}</td>
                         <td>
-                            {% for tag in obj.tag_set.all %}
+                            {% for tag in obj.question_tag.all %}
                             {{ tag.tag_name }}
                             {% empty %}
                             No tags for this question.
