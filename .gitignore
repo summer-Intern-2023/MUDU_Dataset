@@ -1,4 +1,5 @@
 static/
 db.sqlite3
 .vscode/
-
+setcpllect/__pycache__
+setcpllect/migrations/__pycache__
