@@ -26,6 +26,7 @@ from setcollect.function import (
     question_manage,
     title_manage,
     label_collection,
+    word_manage,
 )
 
 urlpatterns = [
@@ -57,8 +58,12 @@ urlpatterns = [
     path("title/<int:nid>/edit/", title_manage.title_edit),
     
     #word manage
-    path('word/list/', views.word_list),
-    path('word/add/', views.word_add),
+    path('word/list/', word_manage.word_list),
+    path('word/add/', word_manage.word_add),
+    path("word/delete/", word_manage.word_delete),
+    path('word/<int:nid>/edit/', word_manage.word_edit),
+    
+    
     
     
 ]

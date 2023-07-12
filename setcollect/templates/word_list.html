@@ -26,24 +26,30 @@
                         <th>ID</th>
                         <th>Word</th>
                         <th>Label</th>
+                        <th>Edit</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for obj in data_list %}
-                    {% for label in obj.word_tag.all %}
                     <tr>
                         <td>{{ obj.id }}</td>
                         <td>{{ obj.word }}</td>
-                        <td>{{ label.tag_name }}</td>
+                        
+                        <td>
+                            {% for label in obj.word_tag.all %}
+                            {{ label.tag_name }}
+                            {% empty %}
+                            No tag for this word.
+                            {% endfor %}
+                        </td>
+                        
+                        <td>
+                            <a class="btn btn-primary btn-xs"
+                            href="http://127.0.0.1:8000/word/{{ obj.id }}/edit/">Edit</a>
+                            <a class="btn btn-danger btn-xs"
+                                href="http://127.0.0.1:8000/word/delete/?nid={{obj.id}}">Delete</a>
+                        </td>
                     </tr>
-                    {% empty %}
-                    <tr>
-                        <td>{{ obj.id }}</td>
-                        <td>{{ obj.word }}</td>
-                        <td>{{ label.word_tag_name }}</td>
-                        <td colspan="2">No answers for this question.</td>
-                    </tr>
-                    {% endfor %}
                     {% endfor %}
                 </tbody>
             </table>

@@ -17,7 +17,7 @@ http_address = "http://127.0.0.1:8000/"
 
 def label_list(request):
     # get all datas in sql
-    data_list = Tag.objects.annotate(num_questions=Count("question")).all()
+    data_list = Tag.objects.annotate(num_question = Count("question"), num_word = Count("word")).all()
 
     # tansform into html and return
     return render(request, "label_list.html", {"data_list": data_list})

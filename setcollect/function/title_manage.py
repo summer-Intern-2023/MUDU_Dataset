@@ -55,7 +55,7 @@ def title_delete(request):
 
 def title_edit(request, nid):
     if request.method == "GET":
-        row_object = UserInfo.objects.filter(id=nid).first()
+        row_object = Title.objects.filter(id=nid).first()
         return render(request, "title_edit.html", {"row_object": row_object})
 
     title = request.POST.get("title")
