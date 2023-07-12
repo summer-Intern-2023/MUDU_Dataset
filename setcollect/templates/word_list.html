@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div>
+    <div class="container">
+        <div style="margin-bottom: 10px;">
+            <a class="btn btn-success" href="http://127.0.0.1:8000/word/add/">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                Add Word
+            </a>
+        </div>
+
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                Word list
+            </div>
+
+
+            <!-- Table -->
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Word</th>
+                        <th>Label</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for obj in data_list %}
+                    {% for label in obj.word_tag.all %}
+                    <tr>
+                        <td>{{ obj.id }}</td>
+                        <td>{{ obj.word }}</td>
+                        <td>{{ label.tag_name }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td>{{ obj.id }}</td>
+                        <td>{{ obj.word }}</td>
+                        <td>{{ label.word_tag_name }}</td>
+                        <td colspan="2">No answers for this question.</td>
+                    </tr>
+                    {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

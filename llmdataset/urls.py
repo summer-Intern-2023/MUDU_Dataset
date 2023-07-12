@@ -44,4 +44,12 @@ urlpatterns = [
     path('label/delete/', views.label_delete),
     path('label/search/', views.search_by_label),
     path('label/search/search/', views.search_search, name='search_search'),
+    
+    #word manage
+    path('word/list/', views.word_list),
+    path('word/add/', views.word_add),
+    
+    path('test/', views.test),
+    
+    
 ]
