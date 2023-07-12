@@ -1,0 +1,65 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div>
+    <div class="container">
+        <div style="margin-bottom: 10px;">
+            <a class="btn btn-success" href="http://127.0.0.1:8000/title/add/">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                Create new title
+            </a>
+        </div>
+
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                Title list
+            </div>
+
+            <!-- Table -->
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Title ID</th>
+                        <th>Title</th>
+                        <th>Sentences</th>
+                        <th>Words</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for title in titles %}
+                    <tr>
+                        <td> {{ title.title.id }}</td>
+                        <td>{{ title.title.title }}</td>
+                        <td>
+                            {% for sentence in title.title.sentences %}
+                            {{ sentence }}
+                            {% empty %}
+                            No sentences for this title.
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for word in title.title.words %}
+                            {{ word }}
+                            {% empty %}
+                            No words for this title.
+                            {% endfor %}
+                        <td>
+                            <a class="btn btn-primary btn-xs"
+                                href="http://127.0.0.1:8000/title/{{ title.title.id }}/edit/">Edit</a>
+                            <a class="btn btn-danger btn-xs"
+                                href="http://127.0.0.1:8000/title/delete/?nid={{title.title.id}}">Delete</a>
+                        </td>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
