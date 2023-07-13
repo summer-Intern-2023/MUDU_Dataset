@@ -10,6 +10,7 @@ from setcollect.models import (
     Sentences,
     Word,
 )
+from django.contrib import messages
 
 
 http_address = "http://127.0.0.1:8000/"
@@ -28,6 +29,10 @@ def label_add(request):
         return render(request, "label_add.html")
 
     tag_name = request.POST.get("tag_name")
+    if not tag_name or not tag_name.strip():
+        messages.error(request, "Label cannot be empty or only contain spaces!")
+        return render(request, "label_add.html")
+
     Tag.objects.create(tag_name=tag_name)
 
     return redirect(http_address + "label/list/")

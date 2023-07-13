@@ -34,7 +34,7 @@ def word_add(request):
 
 
     if not word or word.strip() == "":
-        messages.error(request, "Question cannot be empty or only contain spaces！")
+        messages.error(request, "Word cannot be empty or only contain spaces！")
         return redirect(
             http_address + f"word/add?word={word}&tag_name={tag_names}"
         )
