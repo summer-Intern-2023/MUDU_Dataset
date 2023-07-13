@@ -74,6 +74,15 @@ def word_edit(request, nid):
         messages.error(request, "Word cannot be empty or only contain spaces!")
         return redirect(http_address + f"word/{nid}/edit")
 
+    
+    # 检查word是否已存在
+    existing_word = Word.objects.filter(word=word_text).first()
+    if existing_word:
+        messages.error(request, "Word already exist!")
+        return redirect(
+            http_address + f"word/{nid}/edit"
+        )  # 重定向回编辑页面
+        
     # Update the word text
     word.word = word_text
     word.save()

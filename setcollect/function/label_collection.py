@@ -29,6 +29,7 @@ def label_add(request):
         return render(request, "label_add.html")
 
     tag_name = request.POST.get("tag_name")
+    
     if not tag_name or not tag_name.strip():
         messages.error(request, "Label cannot be empty or only contain spaces!")
         return render(request, "label_add.html")
