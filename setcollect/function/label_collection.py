@@ -10,6 +10,7 @@ from setcollect.models import (
     Sentences,
     Word,
 )
+from django.contrib import messages
 
 
 http_address = "http://127.0.0.1:8000/"
