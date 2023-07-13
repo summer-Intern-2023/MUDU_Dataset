@@ -82,9 +82,8 @@ def word_edit(request, nid):
         messages.error(request, "Word cannot be empty or only contain spaces!")
         return redirect(http_address + f"word/{nid}/edit")
 
-    
-    # 检查word是否已存在
-    existing_word = Word.objects.filter(word=word_text).first()
+    # 检查word是否已存在，排除当前正在编辑的word
+    existing_word = Word.objects.filter(word=word_text).exclude(id=nid).first()
     if existing_word:
         messages.error(request, "Word already exist!")
         return redirect(
@@ -108,3 +107,4 @@ def word_edit(request, nid):
         word.word_tag.add(tag)
 
     return redirect(http_address + "word/list/")
+
