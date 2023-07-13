@@ -10,6 +10,7 @@ from setcollect.models import (
     Sentences,
     Word,
 )
+from django.contrib import messages
 
 
 http_address = "http://127.0.0.1:8000/"
@@ -28,6 +29,10 @@ def label_add(request):
         return render(request, "label_add.html")
 
     tag_name = request.POST.get("tag_name")
+    if not tag_name or not tag_name.strip():
+        messages.error(request, "Label cannot be empty or only contain spaces!")
+        return render(request, "label_add.html")
+
     Tag.objects.create(tag_name=tag_name)
 
     return redirect(http_address + "label/list/")
@@ -53,10 +58,14 @@ def search_search(request):
         if search_tag:
             tag = Tag.objects.filter(tag_name__icontains=search_tag).first()
             if tag:
-                questions = tag.question.all()
+                questions = Question.objects.filter(question_tag=tag)
+                words = Word.objects.filter(word_tag=tag)
             else:
                 questions = Question.objects.none()  # Return an empty queryset
+                words = Word.objects.none()  # Return an empty queryset
         else:
             questions = Question.objects.none()  # Return an empty queryset
+            words = Word.objects.none()  # Return an empty queryset
 
-        return render(request, "search_results.html", {"questions": questions})
+        return render(request, "search_results.html", {"questions": questions, "words": words, "search_tag": search_tag})
+
