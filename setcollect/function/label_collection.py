@@ -58,10 +58,14 @@ def search_search(request):
         if search_tag:
             tag = Tag.objects.filter(tag_name__icontains=search_tag).first()
             if tag:
-                questions = tag.question.all()
+                questions = Question.objects.filter(question_tag=tag)
+                words = Word.objects.filter(word_tag=tag)
             else:
                 questions = Question.objects.none()  # Return an empty queryset
+                words = Word.objects.none()  # Return an empty queryset
         else:
             questions = Question.objects.none()  # Return an empty queryset
+            words = Word.objects.none()  # Return an empty queryset
 
-        return render(request, "search_results.html", {"questions": questions})
+        return render(request, "search_results.html", {"questions": questions, "words": words, "search_tag": search_tag})
+
