@@ -39,6 +39,14 @@ def word_add(request):
             http_address + f"word/add?word={word}&tag_name={tag_names}"
         )
 
+    # 检查word是否已存在
+    existing_Word = Word.objects.filter(word=word).first()
+    if existing_Word:
+        messages.error(request, "Word already exist!")
+        return redirect(
+            http_address + f"word/add?word={word}"
+        )  # 重定向回编辑页面
+
     tag_names = tag_names.split()
 
     # Create or get the conversation
