@@ -1,63 +1,76 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<script>
-    // Autocomplete function
-    function autocomplete(inp, arr) {
-        inp.addEventListener("input", function (e) {
-            var a, b, i, val = this.value;
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Label Search</h3>
+            </div>
 
-            closeAllLists();
-            if (!val) { return false; }
-            a = document.createElement("DIV");
-            a.setAttribute("id", this.id + "autocomplete-list");
-            a.setAttribute("class", "autocomplete-items");
+            <form action="search/" method="get" class="form-horizontal">
+                <div class="form-group">
+                    <label for="tag_search" class="col-sm-2 control-label">Search by Tag:</label>
+                    <div class="col-sm-10">
+                        <input id="tag_search" type="text" class="form-control" name="tag_name" placeholder="Enter a tag">
+                    </div>
+                </div>
 
-            this.parentNode.appendChild(a);
-            for (i = 0; i < arr.length; i++) {
-                if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                    b = document.createElement("DIV");
-                    b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-                    b.innerHTML += arr[i].substr(val.length);
-                    b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <input type="submit" class="btn btn-primary" value="Search">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
-                    b.addEventListener("click", function (e) {
-                        inp.value = this.getElementsByTagName("input")[0].value;
-                        closeAllLists();
-                    });
+    <script>
+        // Autocomplete function
+        function autocomplete(inp, arr) {
+            inp.addEventListener("input", function (e) {
+                var a, b, i, val = this.value;
 
-                    a.appendChild(b);
+                closeAllLists();
+                if (!val) { return false; }
+                a = document.createElement("DIV");
+                a.setAttribute("id", this.id + "autocomplete-list");
+                a.setAttribute("class", "autocomplete-items");
+
+                this.parentNode.appendChild(a);
+                for (i = 0; i < arr.length; i++) {
+                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                        b = document.createElement("DIV");
+                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                        b.innerHTML += arr[i].substr(val.length);
+                        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+
+                        b.addEventListener("click", function (e) {
+                            inp.value = this.getElementsByTagName("input")[0].value;
+                            closeAllLists();
+                        });
+
+                        a.appendChild(b);
+                    }
+                }
+            });
+
+            function closeAllLists(elmnt) {
+                var x = document.getElementsByClassName("autocomplete-items");
+                for (var i = 0; i < x.length; i++) {
+                    if (elmnt != x[i] && elmnt != inp) {
+                        x[i].parentNode.removeChild(x[i]);
+                    }
                 }
             }
-        });
 
-        function closeAllLists(elmnt) {
-            var x = document.getElementsByClassName("autocomplete-items");
-            for (var i = 0; i < x.length; i++) {
-                if (elmnt != x[i] && elmnt != inp) {
-                    x[i].parentNode.removeChild(x[i]);
-                }
-            }
+            document.addEventListener("click", function (e) {
+                closeAllLists(e.target);
+            });
         }
 
-        document.addEventListener("click", function (e) {
-            closeAllLists(e.target);
-        });
-    }
-
-    window.onload = function () {
-        var tags = { all_tags };
-        autocomplete(document.getElementById("tag_search"), tags);
-    }
-</script>
-
-<form action="search/" method="get">
-    <div>
-        <label for="tag_search">Search by Tag:</label>
-        <input id="tag_search" type="text" name="tag_name" placeholder="Enter a tag">
-    </div>
-    <div>
-        <input type="submit" value="Search">
-    </div>
-</form>
+        window.onload = function () {
+            var tags = { all_tags };
+            autocomplete(document.getElementById("tag_search"), tags);
+        }
+    </script>
 {% endblock %}

@@ -34,7 +34,7 @@ def word_add(request):
 
 
     if not word or word.strip() == "":
-        messages.error(request, "Question cannot be empty or only contain spaces！")
+        messages.error(request, "Word cannot be empty or only contain spaces！")
         return redirect(
             http_address + f"word/add?word={word}&tag_name={tag_names}"
         )
@@ -68,16 +68,24 @@ def word_edit(request, nid):
         )
 
     word_text = request.POST.get("word")
-    # Get the question instance after updating
-    Word.objects.filter(id=nid).update(word=word_text)
-    word = Word.objects.get(id=nid)
+    word = Word.objects.filter(id=nid).first()
 
+    if not word_text or word_text.strip() == "":
+        messages.error(request, "Word cannot be empty or only contain spaces!")
+        return redirect(http_address + f"word/{nid}/edit")
+
+    # Update the word text
+    word.word = word_text
+    word.save()
+
+    # Update the tags
     tag_names = request.POST.getlist("tag_name")
     tag_names = tag_names[0].split()
 
-    # Remove all existing tags for the question
+    # Clear existing tags
     word.word_tag.clear()
 
+    # Add selected tags
     for tag_name in tag_names:
         tag, created = Tag.objects.get_or_create(tag_name=tag_name)
         word.word_tag.add(tag)
