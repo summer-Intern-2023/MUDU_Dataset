@@ -12,10 +12,13 @@ from setcollect.models import (
 
 http_address = "http://127.0.0.1:8000/"
 
+import mapping
+
 
 def title_list(request):
     titles = Title.objects.all()
     title_data = []
+    mapping.mapping_titles_to_words()
 
     for title in titles:
         sentences = Sentences.objects.filter(title=title)

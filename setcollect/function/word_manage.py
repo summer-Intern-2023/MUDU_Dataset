@@ -1,28 +1,22 @@
-from django.shortcuts import render, HttpResponse, redirect
-from django.db.models import Count
+from django.shortcuts import render, redirect
 from setcollect.models import (
     Tag,
     Word,
 )
-from django import forms
-from itertools import groupby
-from operator import attrgetter
 from django.contrib import messages
 
-http_address = 'http://127.0.0.1:8000/'
+http_address = "http://127.0.0.1:8000/"
 
 # --word manage--#
 
+
 def word_list(request):
-    #get all datas in sql
-    word = (
-        Word.objects.all()
-        .prefetch_related("word_tag")
-        .order_by("id")
-    )
-    
-    #tansform into html and return
-    return render(request,"word_list.html",{"data_list":word})
+    # get all datas in sql
+    word = Word.objects.all().prefetch_related("word_tag").order_by("id")
+
+    # tansform into html and return
+    return render(request, "word_list.html", {"data_list": word})
+
 
 def word_add(request):
     label_pool = Tag.objects.all()
@@ -32,12 +26,9 @@ def word_add(request):
     word = request.POST.get("word")
     tag_names = request.POST.get("tag_name")
 
-
     if not word or word.strip() == "":
         messages.error(request, "Question cannot be empty or only contain spaces！")
-        return redirect(
-            http_address + f"word/add?word={word}&tag_name={tag_names}"
-        )
+        return redirect(http_address + f"word/add?word={word}&tag_name={tag_names}")
 
     tag_names = tag_names.split()
 
@@ -56,6 +47,7 @@ def word_delete(request):
     nid = request.GET.get("nid")
     Word.objects.filter(id=nid).delete()
     return redirect(http_address + "word/list/")
+
 
 def word_edit(request, nid):
     label_pool = Tag.objects.all()
