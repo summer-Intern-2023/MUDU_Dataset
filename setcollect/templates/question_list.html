@@ -49,28 +49,7 @@
                         {% for lmodel in obj.lmodel_set.all %}
                         <td>{{ lmodel.get_lmodel_display }}</td>
                         <td>{{ lmodel.answer }}</td>
-<<<<<<< HEAD
-                        <td>
-                            <a class="btn btn-primary btn-xs"
-                                href="http://192.168.132.168/question/{{ obj.id }}/edit/">Edit</a>
-                            <a class="btn btn-danger btn-xs"
-                                href="http://192.168.132.168/question/delete/?nid={{obj.id}}">Delete</a>
-                        </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td>{{ obj.id }}</td>
-                        <td>{{ obj.question }}</td>
-                        <td>
-                            {% for tag in obj.tag_set.all %}
-                            {{ tag.tag_name }}
-                            {% empty %}
-                            No tags for this question.
-                            {% endfor %}
-                        </td>
-=======
                         {% empty %}
->>>>>>> d81076a0bfb9e62890b600fa66c8329ec3f092fe
                         <td colspan="2">No answers for this question.</td>
                         {% endfor %}
                         <td>

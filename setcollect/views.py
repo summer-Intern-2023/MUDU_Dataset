@@ -6,10 +6,9 @@ from django import forms
 from itertools import groupby
 from operator import attrgetter
 
-<<<<<<< HEAD
 http_address = 'http://192.168.132.168/'
-=======
->>>>>>> d81076a0bfb9e62890b600fa66c8329ec3f092fe
+# http_address = 'http://127.0.0.1/'
+
 
 class LoginForm(forms.Form):
     username = forms.CharField(
@@ -39,10 +38,6 @@ def login(request):
 
     form = LoginForm(data=request.POST)
     if form.is_valid():
-<<<<<<< HEAD
-        user_object = UserInfo.objects.filter(name = form.cleaned_data['username'], password = form.cleaned_data['password']).first()
-
-=======
         user_object = UserInfo.objects.filter(
             name=form.cleaned_data["username"], password=form.cleaned_data["password"]
         ).first()
@@ -51,7 +46,6 @@ def login(request):
             form.add_error("username", "用户名错误")
             form.add_error("password", "密码错误")
             return render(request, "login.html", {"form": form})
->>>>>>> d81076a0bfb9e62890b600fa66c8329ec3f092fe
 
         request.session["info"] = {"id": user_object.id, "name": user_object.name}
         return redirect(http_address + "info/main")
