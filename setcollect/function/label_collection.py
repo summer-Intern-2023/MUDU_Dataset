@@ -33,6 +33,14 @@ def label_add(request):
         messages.error(request, "Label cannot be empty or only contain spaces!")
         return render(request, "label_add.html")
 
+    # 检查label是否已存在
+    existing_label = Tag.objects.filter(tag_name=tag_name).first()
+    if existing_label:
+        messages.error(request, "label already exist!")
+        return redirect(
+            http_address + f"label/add?tag_name={tag_name}"
+        )  # 重定向回编辑页面
+
     Tag.objects.create(tag_name=tag_name)
 
     return redirect(http_address + "label/list/")
