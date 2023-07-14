@@ -33,6 +33,8 @@ class LModel(models.Model):
     question = models.ForeignKey("Question", on_delete=models.CASCADE)
 
 class Tag(models.Model):
+    tag_degree = models.CharField(max_length=16)
+    tag_classification = models.CharField(max_length=16)
     tag_name = models.CharField(max_length=32)
 
 class Word(models.Model):
