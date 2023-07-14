@@ -32,9 +32,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Tags</th>
-                        <th>Question tag count</th>
-                        <th>Word tag count</th>
-                        <th>Edit</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,11 +40,7 @@
                     <tr>
                         <td>{{ tag.id }}</td>
                         <td>{{ tag.tag_name }}</td>
-                        <td>{{ tag.num_question }}</td>
-                        <td>{{ tag.num_word }}</td>
                         <td>
-                            {% comment %} <a class="btn btn-primary btn-xs"
-                                href="http://127.0.0.1:8000/label/{{ obj.id }}/edit/">Edit</a> {% endcomment %}
                             <a class="btn btn-danger btn-xs"
                                 href="http://127.0.0.1:8000/label/delete/?nid={{tag.id}}">Delete</a>
                         </td>
