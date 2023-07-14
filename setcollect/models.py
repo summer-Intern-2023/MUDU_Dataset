@@ -38,6 +38,7 @@ class Tag(models.Model):
 class Word(models.Model):
     word = models.CharField(max_length=128)
     sentences = models.ManyToManyField("Sentences")
+    title = models.ManyToManyField("Title")
     word_tag = models.ManyToManyField("Tag")
 
 class Sentences(models.Model):
