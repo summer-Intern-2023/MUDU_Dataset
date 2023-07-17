@@ -51,11 +51,11 @@ class Word(models.Model):
 class Sentences(models.Model):
     sentences = models.TextField()
     words = models.ManyToManyField("Word")
-    title = models.ForeignKey("Title", on_delete=models.CASCADE)
     sentences_tag = models.ManyToManyField("Tag")
 
 
 class Title(models.Model):
     title = models.TextField()
     words = models.ManyToManyField("Word")
+    sentences = models.ManyToManyField("Sentences")
     title_tag = models.ManyToManyField("Tag")

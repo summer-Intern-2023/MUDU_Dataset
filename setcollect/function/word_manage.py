@@ -34,9 +34,7 @@ def word_add(request):
     existing_Word = Word.objects.filter(word=word).first()
     if existing_Word:
         messages.error(request, "Word already exist!")
-        return redirect(
-            http_address + f"word/add?word={word}"
-        )  # 重定向回编辑页面
+        return redirect(http_address + f"word/add?word={word}")  # 重定向回编辑页面
 
     tag_names = tag_names.split()
 
@@ -78,10 +76,8 @@ def word_edit(request, nid):
     existing_word = Word.objects.filter(word=word_text).exclude(id=nid).first()
     if existing_word:
         messages.error(request, "Word already exist!")
-        return redirect(
-            http_address + f"word/{nid}/edit"
-        )  # 重定向回编辑页面
-        
+        return redirect(http_address + f"word/{nid}/edit")  # 重定向回编辑页面
+
     # Update the word text
     word.word = word_text
     word.save()
@@ -99,4 +95,3 @@ def word_edit(request, nid):
         word.word_tag.add(tag)
 
     return redirect(http_address + "word/list/")
-
