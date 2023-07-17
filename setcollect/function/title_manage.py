@@ -68,10 +68,27 @@ def title_delete(request):
 
 
 def title_edit(request, nid):
+    sentence_pool = Sentences.objects.all()
     if request.method == "GET":
         row_object = Title.objects.filter(id=nid).first()
-        return render(request, "title_edit.html", {"row_object": row_object})
+        return render(
+            request, 
+            "title_edit.html", 
+            {"row_object": row_object, "sentences_pool": sentence_pool}
+        )
 
     title = request.POST.get("title")
+    sentences = request.POST.get("sentences")
+    sentences = sentences[0].split()
+    
+    words = request.POST.get("words")
+    words = words[0].split()
+    
     Title.objects.filter(id=nid).update(title=title)
+    
+    sentences.clear()
+    
+    for sentence in sentences:
+        sentences, created = Sentences.objects.get_or_create(sentences=sentence)
+        title.title_sentences.add(sentences)
     return redirect(http_address + "title/list/")
