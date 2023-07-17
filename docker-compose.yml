@@ -1,0 +1,7 @@
+services:
+  db:
+    build: .
+    volumes:
+      - db-data:/data  
+volumes:
+  db-data:

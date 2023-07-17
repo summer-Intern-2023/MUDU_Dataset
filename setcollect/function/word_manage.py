@@ -9,7 +9,7 @@ from itertools import groupby
 from operator import attrgetter
 from django.contrib import messages
 
-http_address = 'http://127.0.0.1:8000/'
+http_address = '192.168.132.168/'
 
 # --word manage--#
 
