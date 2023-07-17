@@ -33,6 +33,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     # main views
     path("info/main/", views.info_main),
+    path("test/", views.test),
     # user manage
     path("login/", user_manage.login),
     path("info/list/", user_manage.info_list),
