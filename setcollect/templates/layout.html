@@ -26,6 +26,12 @@
         .navbar-default .navbar-nav>.active>a:focus {
             background-color: lightgray;
         }
+
+        /* This is the new class for the active link */
+        .navbar-default .navbar-nav>.current>a {
+            background-color: #a5a8a6;
+        }
+
     </style>
 
 </head>
@@ -50,15 +56,15 @@
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="192.168.132.168/info/list">Account Management<span
+                    <li class="active {% if request.path == '/info/list/' %}current{% endif %}"><a href="/info/list/">Account Management<span
                                 class="sr-only">(current)</span></a></li>
-                    <li class="active"><a href="192.168.132.168/title/list">Title Management<span
+                    <li class="active {% if request.path == '/title/list/' %}current{% endif %}"><a href="/title/list/">Title Management<span
                                 class="sr-only">(current)</span></a></li>
-                    <li class="active"><a href="192.168.132.168/question/list">Data Management<span
+                    <li class="active {% if request.path == '/question/list/' %}current{% endif %}"><a href="/question/list/">Data Management<span
                                 class="sr-only">(current)</span></a></li>
-                    <li class="active"><a href="192.168.132.168/label/list">Label Management<span
+                    <li class="active {% if request.path == '/label/list/' %}current{% endif %}"><a href="/label/list/">Label Management<span
                                 class="sr-only">(current)</span></a></li>
-                    <li class="active"><a href="192.168.132.168/word/list">Word Management<span
+                    <li class="active {% if request.path == '/word/list/' %}current{% endif %}"><a href="/word/list/">Word Management<span
                                 class="sr-only">(current)</span></a></li>                                
                 </ul>
 
@@ -83,12 +89,9 @@
         {% block content %} {% endblock %}
     </div>
 
-
-
-
-
     <script src="{% static 'js/jquery-3.6.3.min.js' %}"></script>
     <script src="{% static 'plugins/bootstrap-3.4.1-dist/js/bootstrap.min.js' %}"></script>
 </body>
 
 </html>
+

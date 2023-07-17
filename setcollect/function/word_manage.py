@@ -1,28 +1,22 @@
-from django.shortcuts import render, HttpResponse, redirect
-from django.db.models import Count
+from django.shortcuts import render, redirect
 from setcollect.models import (
     Tag,
     Word,
 )
-from django import forms
-from itertools import groupby
-from operator import attrgetter
 from django.contrib import messages
 
-http_address = '192.168.132.168/'
+http_address = "http://127.0.0.1:8000/"
 
 # --word manage--#
 
+
 def word_list(request):
-    #get all datas in sql
-    word = (
-        Word.objects.all()
-        .prefetch_related("word_tag")
-        .order_by("id")
-    )
-    
-    #tansform into html and return
-    return render(request,"word_list.html",{"data_list":word})
+    # get all datas in sql
+    word = Word.objects.all().prefetch_related("word_tag").order_by("id")
+
+    # tansform into html and return
+    return render(request, "word_list.html", {"data_list": word})
+
 
 def word_add(request):
     label_pool = Tag.objects.all()
@@ -32,12 +26,15 @@ def word_add(request):
     word = request.POST.get("word")
     tag_names = request.POST.get("tag_name")
 
-
     if not word or word.strip() == "":
-        messages.error(request, "Word cannot be empty or only contain spaces！")
-        return redirect(
-            http_address + f"word/add?word={word}&tag_name={tag_names}"
-        )
+        messages.error(request, "Word cannot be empty or only contain spaces!")
+        return redirect(http_address + f"word/add?word={word}&tag_name={tag_names}")
+
+    # 检查word是否已存在
+    existing_Word = Word.objects.filter(word=word).first()
+    if existing_Word:
+        messages.error(request, "Word already exist!")
+        return redirect(http_address + f"word/add?word={word}")  # 重定向回编辑页面
 
     tag_names = tag_names.split()
 
@@ -57,6 +54,7 @@ def word_delete(request):
     Word.objects.filter(id=nid).delete()
     return redirect(http_address + "word/list/")
 
+
 def word_edit(request, nid):
     label_pool = Tag.objects.all()
     if request.method == "GET":
@@ -73,6 +71,12 @@ def word_edit(request, nid):
     if not word_text or word_text.strip() == "":
         messages.error(request, "Word cannot be empty or only contain spaces!")
         return redirect(http_address + f"word/{nid}/edit")
+
+    # 检查word是否已存在，排除当前正在编辑的word
+    existing_word = Word.objects.filter(word=word_text).exclude(id=nid).first()
+    if existing_word:
+        messages.error(request, "Word already exist!")
+        return redirect(http_address + f"word/{nid}/edit")  # 重定向回编辑页面
 
     # Update the word text
     word.word = word_text

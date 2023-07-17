@@ -1,19 +1,74 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<h1>Search Results</h1>
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Search Result</h3>
+            </div>
+            <div class="panel-body">
+                {% if questions or words %}
+                    <h2 class="large-text">Label: {{ search_tag }}</h2>
+                    <div class="row">
+                        {% if questions %}
+                            <div class="col-md-6">
+                                <h3 class="large-text">Questions</h3>
+                                <div class="scrollable">
+                                    <ul>
+                                        {% for question in questions %}
+                                            <li>
+                                                <div class="question-item">
+                                                    <h4 class="small-text">{{ question.question }}</h4>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        {% endif %}
 
-{% if questions %}
-<ul>
-    {% for question in questions %}
-    <li>
-        <h2>{{ question.question }}</h2>
-        <p>{{ question.lmodel_set.answer }}</p>
-        <p>Tags: {% for tag in question.tag_set.all %} {{ tag.tag_name }} {% endfor %}</p>
-    </li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>No results found.</p>
-{% endif %}
+                        {% if words %}
+                            <div class="col-md-6">
+                                <h3 class="large-text">Words</h3>
+                                <div class="scrollable">
+                                    <ul>
+                                        {% for word in words %}
+                                            <li>
+                                                <div class="word-item">
+                                                    <h4 class="small-text">{{ word.word }}</h4>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <p class="small-text">No results found.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .scrollable {
+            max-height: 500px; /* Adjust the appropriate height */
+            overflow-y: auto;
+        }
+        .question-item, .word-item {
+            margin-bottom: 10px; /* Adjust as necessary */
+            padding: 5px; /* Adjust as necessary */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .large-text {
+            font-size: 2em; /* or another size you prefer */
+        }
+        .small-text {
+            font-size: 1.3em; /* or another size you prefer */
+        }
+    </style>
 {% endblock %}
+
