@@ -21,7 +21,7 @@ from setcollect.models import (
     Word,
 )
 
-openai_api_key = "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"
+openai_api_key = ""
 
 response_schemas_word_to_titles = [
     ResponseSchema(name="Emotion", description="第一个步骤的回答"),
