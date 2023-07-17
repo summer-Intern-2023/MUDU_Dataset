@@ -16,35 +16,38 @@ import mapping
 
 
 def title_list(request):
-    titles = Title.objects.all()
     title_data = []
-    mapping.mapping_titles_to_words()
 
     for (
         title_object,
-        emotion,
+        emotion_list,
         words_list,
-        sentences_list,
-    ) in mapping.mapping_titles_to_words():
-        print(emotion)
+    ) in mapping.mapping_words_to_titles():
+        for word in words_list:
+            word_object = Word.objects.filter(word=word)
+            if word_object:
+                title_object.words.add(word_object)
 
-    # for title in titles:
-    #     sentences = Sentences.objects.filter(title=title)
-    #     sentence_texts = [sentence.sentences for sentence in sentences]
+        for sentence in mapping.mapping_words_to_sentences(
+            title_object.title, words_list, emotion_list
+        ):
+            sentence_object = Sentences.objects.create(sentences=sentence)
+            sentence_object.title = title_object
+            for word in words_list:
+                word_object = Word.objects.filter(word=word)
+                if word_object:
+                    sentence_object.words.add(word_object)
 
-    #     words = []
-    #     for word in Word.objects.all():
-    #         word = Title.objects.filter(title=word.title)
-    #         words.append(word)
-
-    #     title_data.append(
-    #         {
-    #             "title": title,
-    #             "sentences": sentence_texts,
-    #             "words": list(set(words)),  # Remove duplicates using set
-    #         }
-    #     )
-
+        title_data.append(
+            {
+                "title": title_object.title,
+                "words": [word.word for word in title_object.words.all()],
+                "sentences": [
+                    sentence.sentences
+                    for sentence in Sentences.objects.filter(title=title_object)
+                ],
+            }
+        )
     return render(request, "title_list.html", {"titles": title_data})
 
 

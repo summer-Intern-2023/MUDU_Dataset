@@ -43,17 +43,17 @@ class Tag(models.Model):
 
 class Word(models.Model):
     word = models.CharField(max_length=128)
-    sentences = models.ManyToManyField("Sentences")
-    title = models.ManyToManyField("Title")
     word_tag = models.ManyToManyField("Tag")
 
 
 class Sentences(models.Model):
     sentences = models.TextField()
+    words = models.ManyToManyField("Word")
     title = models.ForeignKey("Title", on_delete=models.CASCADE)
     sentences_tag = models.ManyToManyField("Tag")
 
 
 class Title(models.Model):
     title = models.TextField()
+    words = models.ManyToManyField("Word")
     title_tag = models.ManyToManyField("Tag")
