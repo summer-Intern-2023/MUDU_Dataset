@@ -57,7 +57,7 @@ from mapping words to titles
 """
 
 
-def mapping_words_to_title(title_object):
+def mapping(title_object):
     if title_object.sentences.all() and title_object.words.all():
         return title_object, None, None, None, True
 

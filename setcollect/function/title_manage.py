@@ -25,7 +25,7 @@ def title_list(request):
             words_list,
             sentences_list,
             skip,
-        ) = mapping.mapping_words_to_title(title)
+        ) = mapping.mapping(title)
         if skip:
             print(title.title, "has been skipped")
             title_data.append(
