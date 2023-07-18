@@ -18,7 +18,9 @@ http_address = "http://127.0.0.1:8000"
 
 def label_list(request):
     # get all datas in sql
-    data_list = Tag.objects.annotate(num_question = Count("question"), num_word = Count("word")).all()
+    data_list = Tag.objects.annotate(
+        num_question=Count("question"), num_word=Count("word")
+    ).all()
 
     # tansform into html and return
     return render(request, "label_list.html", {"data_list": data_list})
@@ -29,18 +31,19 @@ def label_add(request):
         return render(request, "label_add.html")
 
     tag_name = request.POST.get("tag_name")
-    
+    tag_classification = request.POST.get("tag_classification")
+
     if not tag_name or not tag_name.strip():
         messages.error(request, "Label cannot be empty or only contain spaces!")
         return render(request, "label_add.html")
 
     # 检查label是否已存在
-    existing_label = Tag.objects.filter(tag_name=tag_name).first()
+    existing_label = Tag.objects.filter(
+        tag_name=tag_name, tag_classification=tag_classification
+    ).first()
     if existing_label:
         messages.error(request, "label already exist!")
-        return redirect(
-            http_address + f"label/add?tag_name={tag_name}"
-        )  # 重定向回编辑页面
+        return redirect(http_address + f"label/add?tag_name={tag_name}")  # 重定向回编辑页面
 
     Tag.objects.create(tag_name=tag_name)
 
@@ -76,5 +79,8 @@ def search_search(request):
             questions = Question.objects.none()  # Return an empty queryset
             words = Word.objects.none()  # Return an empty queryset
 
-        return render(request, "search_results.html", {"questions": questions, "words": words, "search_tag": search_tag})
-
+        return render(
+            request,
+            "search_results.html",
+            {"questions": questions, "words": words, "search_tag": search_tag},
+        )

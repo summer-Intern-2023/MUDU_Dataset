@@ -5,13 +5,13 @@
 <div>
     <div class="container">
         <div style="margin-bottom: 10px;">
-            <a class="btn btn-success" href="http://127.0.0.1:8000/title/add/">
+            <a class="btn btn-success" href="/title/add/">
                 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                 Create new title
             </a>
         </div>
         <div style="margin-bottom: 10px;">
-            <a class="btn btn-success" href="http://127.0.0.1:8000/title/list/">
+            <a class="btn btn-success" href="/title/list/">
                 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                 Mapping
             </a>
@@ -47,9 +47,9 @@
                         {% endfor %}
                     <td>
                         <a class="btn btn-primary btn-xs"
-                            href="http://127.0.0.1:80/title/{{ title.title.id }}/edit/">Edit</a>
+                            href="/title/{{ title.title.id }}/edit/">Edit</a>
                         <a class="btn btn-danger btn-xs"
-                            href="http://127.0.0.1:80/title/delete/?nid={{title.title.id}}">Delete</a>
+                            href="/title/delete/?nid={{title.title.id}}">Delete</a>
                     </td>
                     </td>
                 </tr>

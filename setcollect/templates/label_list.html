@@ -5,14 +5,14 @@
 <div>
     <div class="container">
         <div style="margin-bottom: 10px;">
-            <a class="btn btn-success" href="http://127.0.0.1:8000/label/add/">
+            <a class="btn btn-success" href="/label/add/">
                 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                 Create new Label
             </a>
         </div>
 
         <div style="margin-bottom: 30px;">
-            <a class="btn btn-success" href="http://127.0.0.1:8000/label/search/">
+            <a class="btn btn-success" href="/label/search/">
                 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                 Search by label
             </a>
@@ -31,6 +31,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Classification</th>
                         <th>Tags</th>
                         <th>Delete</th>
                     </tr>
@@ -38,11 +39,12 @@
                 <tbody>
                     {% for tag in data_list %}
                     <tr>
+                        <td>{{ tag.tag_classification }}</td>
                         <td>{{ tag.id }}</td>
                         <td>{{ tag.tag_name }}</td>
                         <td>
                             <a class="btn btn-danger btn-xs"
-                                href="http://127.0.0.1:8000/label/delete/?nid={{tag.id}}">Delete</a>
+                                href="/label/delete/?nid={{tag.id}}">Delete</a>
                         </td>
                         {% endfor %}
                 </tbody>

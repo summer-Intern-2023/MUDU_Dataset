@@ -25,7 +25,7 @@ def title_list(request):
             words_list,
             sentences_list,
             skip,
-        ) = mapping.mapping_words_to_title(title)
+        ) = mapping.mapping(title)
         if skip:
             print(title.title, "has been skipped")
             title_data.append(
@@ -41,17 +41,23 @@ def title_list(request):
         else:
             print(title.title, "has been processed")
             for word in words_list:
-                word_object = Word.objects.get(word=word)
-                if word_object:
-                    title_object.words.add(word_object)
+                try:
+                    word_object = Word.objects.get(word=word)
+                    if word_object:
+                        title_object.words.add(word_object)
+                except Word.DoesNotExist:
+                    print("words does not exist.")
 
             for sentence in sentences_list:
                 sentence_object = Sentences.objects.create(sentences=sentence)
                 title_object.sentences.add(sentence_object)
                 for word in words_list:
-                    word_object = Word.objects.get(word=word)
-                    if word_object:
-                        sentence_object.words.add(word_object)
+                    try:
+                        word_object = Word.objects.get(word=word)
+                        if word_object:
+                            title_object.words.add(word_object)
+                    except Word.DoesNotExist:
+                        print("sentences does not exist.")
 
         title_data.append(
             {
