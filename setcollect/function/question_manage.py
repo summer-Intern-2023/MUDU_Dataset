@@ -47,12 +47,6 @@ def question_add(request):
     if request.method == "GET":
         return render(request, "question_add.html", {"label_pool": label_pool})
 
-    conversation_name = request.POST.get("conversation")
-    question_text = request.POST.get("question")
-    tag_names = request.POST.get("tag_name").split()
-    answer = request.POST.get("answer")
-    lmodel_choice = request.POST.get("lmodel")
-
     if not question_text or question_text.strip() == "":
         messages.error(request, "Question cannot be empty or only contain spaces！")
         return redirect(
@@ -66,6 +60,12 @@ def question_add(request):
             http_address
             + f"question/add?question={question_text}&tag_name={' '.join(tag_names)}"
         )
+
+    conversation_name = request.POST.get("conversation")
+    question_text = request.POST.get("question")
+    tag_names = request.POST.get("tag_name").split()
+    answer = request.POST.get("answer")
+    lmodel_choice = request.POST.get("lmodel")
 
     # Create or get the conversation
     conversation, created = Conversation.objects.get_or_create(name=conversation_name)
