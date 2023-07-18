@@ -1,6 +1,4 @@
 Django==3.2.5
 requests==2.26.0
 mysqlclient==2.0.3
-virtualenv
-tiktoken
-faiss-cpu
+langchain
