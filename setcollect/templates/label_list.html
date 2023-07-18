@@ -5,14 +5,14 @@
 <div>
     <div class="container">
         <div style="margin-bottom: 10px;">
-            <a class="btn btn-success" href="http://192.168.132.168/label/add/">
+            <a class="btn btn-success" href="http://127.0.0.1:8000/label/add/">
                 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                 Create new Label
             </a>
         </div>
 
         <div style="margin-bottom: 30px;">
-            <a class="btn btn-success" href="http://192.168.132.168/label/search/">
+            <a class="btn btn-success" href="http://127.0.0.1:8000/label/search/">
                 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                 Search by label
             </a>
@@ -42,7 +42,7 @@
                         <td>{{ tag.tag_name }}</td>
                         <td>
                             <a class="btn btn-danger btn-xs"
-                                href="192.168.132.168/label/delete/?nid={{tag.id}}">Delete</a>
+                                href="http://127.0.0.1:8000/label/delete/?nid={{tag.id}}">Delete</a>
                         </td>
                         {% endfor %}
                 </tbody>

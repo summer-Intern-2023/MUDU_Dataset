@@ -5,7 +5,7 @@
 <div>
     <div class="container">
         <div style="margin-bottom: 10px;">
-            <a class="btn btn-success" href="http://192.168.132.168/word/add/">
+            <a class="btn btn-success" href="http://127.0.0.1:8000/word/add/">
                 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                 Add Word
             </a>
@@ -45,9 +45,9 @@
                         
                         <td>
                             <a class="btn btn-primary btn-xs"
-                            href="192.168.132.168/word/{{ obj.id }}/edit/">Edit</a>
+                            href="http://127.0.0.1:8000/word/{{ obj.id }}/edit/">Edit</a>
                             <a class="btn btn-danger btn-xs"
-                                href="192.168.132.168/word/delete/?nid={{obj.id}}">Delete</a>
+                                href="http://127.0.0.1:8000/word/delete/?nid={{obj.id}}">Delete</a>
                         </td>
                     </tr>
                     {% endfor %}

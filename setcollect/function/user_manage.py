@@ -13,7 +13,7 @@ from django import forms
 from django.contrib import messages
 
 
-http_address = "192.168.132.168/"
+http_address = "http://127.0.0.1:8000/"
 
 
 class LoginForm(forms.Form):

@@ -40,9 +40,9 @@
                         <td>{{ obj.get_role_display }}</td>
                         <td>
                             <a class="btn btn-primary btn-xs"
-                                href="192.168.132.168/info/{{ obj.id }}/edit/">Edit</a>
+                                href="http://127.0.0.1:8000/info/{{ obj.id }}/edit/">Edit</a>
                             <a class="btn btn-danger btn-xs"
-                                href="192.168.132.168/info/delete/?nid={{obj.id}}">Delete</a>
+                                href="http://127.0.0.1:8000/info/delete/?nid={{obj.id}}">Delete</a>
                         </td>
                     </tr>
                     {% endfor %}

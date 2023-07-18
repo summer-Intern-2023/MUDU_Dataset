@@ -10,7 +10,7 @@ from setcollect.models import (
     Word,
 )
 
-http_address = "192.168.132.168/"
+http_address = "http://127.0.0.1:8000/"
 
 import mapping
 
