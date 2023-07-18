@@ -25,6 +25,7 @@ def word_add(request):
 
     word = request.POST.get("word")
     tag_names = request.POST.get("tag_name")
+    tag_classification = request.POST.get("tag_classification")
 
     if not word or word.strip() == "":
         messages.error(request, "Word cannot be empty or only contain spaces!")
@@ -43,7 +44,9 @@ def word_add(request):
 
     # Create the tag
     for tag_name in tag_names:
-        tag, created = Tag.objects.get_or_create(tag_name=tag_name)
+        tag, created = Tag.objects.get_or_create(
+            tag_name=tag_name, tag_classification=tag_classification
+        )
         word.word_tag.add(tag)
 
     return redirect(http_address + "word/list/")
@@ -68,6 +71,8 @@ def word_edit(request, nid):
     word_text = request.POST.get("word")
     word = Word.objects.filter(id=nid).first()
 
+    tag_classification = request.POST.get("tag_classification")
+
     if not word_text or word_text.strip() == "":
         messages.error(request, "Word cannot be empty or only contain spaces!")
         return redirect(http_address + f"word/{nid}/edit")
@@ -91,7 +96,9 @@ def word_edit(request, nid):
 
     # Add selected tags
     for tag_name in tag_names:
-        tag, created = Tag.objects.get_or_create(tag_name=tag_name)
+        tag, created = Tag.objects.get_or_create(
+            tag_name=tag_name, tag_classification=tag_classification
+        )
         word.word_tag.add(tag)
 
     return redirect(http_address + "word/list/")
