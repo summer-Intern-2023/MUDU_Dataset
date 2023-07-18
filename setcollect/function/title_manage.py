@@ -58,7 +58,6 @@ def title_list(request):
                             title_object.words.add(word_object)
                     except Word.DoesNotExist:
                         print("sentences does not exist.")
-
         title_data.append(
             {
                 "title": title_object,
@@ -96,13 +95,14 @@ def title_edit(request, nid):
         )
 
     title = request.POST.get("title")
-    sentences = request.POST.get("sentences")
+    if not Title.object.get(title=title):
+        Title.objects.filter(id=nid).update(title=title, mapping=False)
+
+    sentences = request.POST.getlist("sentences")
     sentences = sentences[0].split()
 
-    words = request.POST.get("words")
+    words = request.POST.getlist("words")
     words = words[0].split()
-
-    Title.objects.filter(id=nid).update(title=title)
 
     sentences.clear()
 

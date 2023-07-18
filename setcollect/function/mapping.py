@@ -31,7 +31,7 @@ response_schemas_word_to_titles = [
     ),
     ResponseSchema(
         name="Sentences",
-        description="用词语们生成的一些句子, 每个句子可以包含多个词语, 用于作文的开头, 中间, 或者结尾, 最后输出一个list",
+        description="用词语们生成句子, 每个句子可以包含多个词语, 用于作文的开头, 中间, 或者结尾, 最后输出一个list",
     ),
 ]
 output_parser_word_to_titles = StructuredOutputParser.from_response_schemas(
@@ -58,7 +58,7 @@ from mapping words to titles
 
 
 def mapping(title_object):
-    if title_object.sentences.all() and title_object.words.all():
+    if title_object.mapping:
         return title_object, None, None, None, True
 
     word_list = []
@@ -77,14 +77,27 @@ def mapping(title_object):
         word_list.append(word.word)
 
     _input = prompt.format(title=title_object.title, word_list=word_list)
-    with get_openai_callback() as cb:
-        output = model(_input)
-        print(cb)
-    output = output_parser_word_to_titles.parse(output)
-    return (
-        title_object,
-        output["Emotion"],
-        output["Words"],
-        output["Sentences"],
-        False,
-    )
+
+    try:
+        with get_openai_callback() as cb:
+            output = model(_input)
+            print(cb)
+        output = output_parser_word_to_titles.parse(output)
+        title_object.mapping = True
+        title_object.save()
+        return (
+            title_object,
+            output["Emotion"],
+            output["Words"],
+            output["Sentences"],
+            False,
+        )
+    except:
+        print("Unexpected error:", sys.exc_info()[0])
+        return (
+            title_object,
+            None,
+            None,
+            None,
+            True,
+        )

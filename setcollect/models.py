@@ -59,3 +59,4 @@ class Title(models.Model):
     words = models.ManyToManyField("Word")
     sentences = models.ManyToManyField("Sentences")
     title_tag = models.ManyToManyField("Tag")
+    mapping = models.BooleanField(default=False)

@@ -25,6 +25,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Word</th>
+                        <th>Classification</th>
                         <th>Label</th>
                         <th>Edit</th>
                     </tr>
@@ -34,20 +35,19 @@
                     <tr>
                         <td>{{ obj.id }}</td>
                         <td>{{ obj.word }}</td>
-                        
+
                         <td>
                             {% for label in obj.word_tag.all %}
+                            {{ label.tag_classification }}
                             {{ label.tag_name }}
                             {% empty %}
                             No tag for this word.
                             {% endfor %}
                         </td>
-                        
+
                         <td>
-                            <a class="btn btn-primary btn-xs"
-                            href="/word/{{ obj.id }}/edit/">Edit</a>
-                            <a class="btn btn-danger btn-xs"
-                                href="/word/delete/?nid={{obj.id}}">Delete</a>
+                            <a class="btn btn-primary btn-xs" href="/word/{{ obj.id }}/edit/">Edit</a>
+                            <a class="btn btn-danger btn-xs" href="/word/delete/?nid={{obj.id}}">Delete</a>
                         </td>
                     </tr>
                     {% endfor %}
