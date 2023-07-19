@@ -39,7 +39,7 @@ def label_add(request):
     if existing_label:
         messages.error(request, "label already exist!")
         return redirect(
-            http_address + f"label/add?tag_name={tag_name}"
+            http_address + f"label/add/?tag_name={tag_name}/"
         )  # 重定向回编辑页面
 
     Tag.objects.create(tag_name=tag_name, tag_classification=tag_classification)

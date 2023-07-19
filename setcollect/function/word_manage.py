@@ -5,7 +5,7 @@ from setcollect.models import (
 )
 from django.contrib import messages
 
-http_address = "http://127.0.0.1:8000/"
+http_address = "http://192.168.132.168/"
 
 # --word manage--#
 
@@ -29,13 +29,13 @@ def word_add(request):
 
     if not word or word.strip() == "":
         messages.error(request, "Word cannot be empty or only contain spaces!")
-        return redirect(http_address + f"word/add?word={word}&tag_name={tag_names}")
+        return redirect(http_address + f"word/add?word={word}&tag_name={tag_names}/")
 
     # 检查word是否已存在
     existing_Word = Word.objects.filter(word=word).first()
     if existing_Word:
         messages.error(request, "Word already exist!")
-        return redirect(http_address + f"word/add?word={word}")  # 重定向回编辑页面
+        return redirect(http_address + f"word/add?word={word}/")  # 重定向回编辑页面
 
     tag_names = tag_names.split()
 
@@ -75,13 +75,13 @@ def word_edit(request, nid):
 
     if not word_text or word_text.strip() == "":
         messages.error(request, "Word cannot be empty or only contain spaces!")
-        return redirect(http_address + f"word/{nid}/edit")
+        return redirect(http_address + f"word/{nid}/edit/")
 
     # 检查word是否已存在，排除当前正在编辑的word
     existing_word = Word.objects.filter(word=word_text).exclude(id=nid).first()
     if existing_word:
         messages.error(request, "Word already exist!")
-        return redirect(http_address + f"word/{nid}/edit")  # 重定向回编辑页面
+        return redirect(http_address + f"word/{nid}/edit/")  # 重定向回编辑页面
 
     # Update the word text
     word.word = word_text
