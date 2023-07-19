@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
+from django.utils.http import urlencode
 from setcollect.models import (
     Tag,
     Word,
 )
 from django.contrib import messages
 
-http_address = "http://192.168.132.168/"
+http_address = "http://127.0.0.1:8000/"
 
 # --word manage--#
 
@@ -20,22 +21,26 @@ def word_list(request):
 
 def word_add(request):
     label_pool = Tag.objects.all()
+    
     if request.method == "GET":
         return render(request, "word_add.html", {"label_pool": label_pool})
-
     word = request.POST.get("word")
     tag_names = request.POST.get("tag_name")
     tag_classification = request.POST.get("tag_classification")
-
+    
+    
     if not word or word.strip() == "":
         messages.error(request, "Word cannot be empty or only contain spaces!")
-        return redirect(http_address + f"word/add?word={word}&tag_name={tag_names}/")
+        word_param = word or ''
+        tag_names_param = tag_names or ''
+        return render(request, "word_add.html")
 
     # 检查word是否已存在
     existing_Word = Word.objects.filter(word=word).first()
     if existing_Word:
-        messages.error(request, "Word already exist!")
-        return redirect(http_address + f"word/add?word={word}/")  # 重定向回编辑页面
+        word_param = '' if word is None else word
+        messages.error(request, "Word already exists!")
+        return redirect(http_address + f"word/add/?word={urlencode({'word': word_param})}/")
 
     tag_names = tag_names.split()
 
@@ -49,7 +54,9 @@ def word_add(request):
         )
         word.word_tag.add(tag)
 
+
     return redirect(http_address + "word/list/")
+
 
 
 def word_delete(request):

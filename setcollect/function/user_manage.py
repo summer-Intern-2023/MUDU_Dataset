@@ -67,7 +67,7 @@ def info_add(request):
 
     if not user or " " in user:
         messages.error(request, "Username cannot be empty or contain spaces！")
-        return redirect(http_address + f"info/add?pwd={pwd}&role={role}")
+        return render(request, "info_add.html")
 
     if not pwd or " " in pwd:
         messages.error(request, "Password cannot be empty or contain spaces！")
