@@ -32,10 +32,10 @@
 
                         <div id="tagsDisplay" style="margin-top: 10px;"></div>
 
-                        <div id="tagButtons" style="margin-top: 10px;">
+                        <div id="tagButtons" style="margin-top: 10px; overflow: auto; max-height: 100px;">
                             {% for tag in label_pool %}
                             <button type="button" onclick="addTagFromInput(event)" class="btn btn-secondary btn-sm"
-                                style="background-color: #a4a9b0;">{{ tag.tag_name }}</button>
+                                style="background-color: #a4a9b0; margin-bottom: 5px">{{ tag.tag_name }}</button>
                             {% endfor %}
                         </div>
                     </div>
@@ -95,7 +95,7 @@
         for (var i = 0; i < selectedTags.length; i++) {
             var tag = selectedTags[i];
             displayDiv.innerHTML += `
-            <span class="btn btn-primary btn-sm" style="margin-right: 5px;">
+            <span class="btn btn-primary btn-sm" style="margin-right: 5px; margin-bottom: 5px;">
                 ${tag}
                 <span class="close" style="margin-left: 5px;" onclick="event.stopPropagation(); removeTag('${tag}')">&times;</span>
             </span>`;
