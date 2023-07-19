@@ -16,47 +16,47 @@
                 Mapping
             </a>
         </div>
-
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Title ID</th>
-                    <th>Title</th>
-                    <th>Sentences</th>
-                    <th>Words</th>
-                    <th>Edit</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for title in titles %}
-                <tr>
-                    <td> {{ title.title.id }}</td>
-                    <td>{{ title.title.title }}</td>
-                    <td>
-                        {% for sentence in title.sentences %}
-                        {{ sentence.sentences }}<br>
-                        {% empty %}
-                        No sentences for this title.
-                        {% endfor %}
-                    </td>
-                    <td>
-                        {% for word in title.word %}
-                        {{ word.word }}<br>
-                        {% empty %}
-                        No words for this title.
-                        {% endfor %}
-                    <td>
-                        <a class="btn btn-primary btn-xs"
-                            href="/title/{{ title.title.id }}/edit/">Edit</a>
-                        <a class="btn btn-danger btn-xs"
-                            href="/title/delete/?nid={{title.title.id}}">Delete</a>
-                    </td>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
+        <div style="overflow: auto; max-height: 400px;">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Title ID</th>
+                        <th>Title</th>
+                        <th>Sentences</th>
+                        <th>Words</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for title in titles %}
+                    <tr>
+                        <td> {{ title.title.id }}</td>
+                        <td>{{ title.title.title }}</td>
+                        <td>
+                            {% for sentence in title.sentences %}
+                            {{ sentence.sentences }}<br>
+                            {% empty %}
+                            No sentences for this title.
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for word in title.word %}
+                            {{ word.word }}<br>
+                            {% empty %}
+                            No words for this title.
+                            {% endfor %}
+                        <td>
+                            <a class="btn btn-primary btn-xs"
+                                href="/title/{{ title.title.id }}/edit/">Edit</a>
+                            <a class="btn btn-danger btn-xs"
+                                href="/title/delete/?nid={{title.title.id}}">Delete</a>
+                        </td>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 

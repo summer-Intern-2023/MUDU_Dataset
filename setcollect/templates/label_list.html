@@ -27,28 +27,30 @@
 
 
             <!-- Table -->
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Classification</th>
-                        <th>Tags</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for tag in data_list %}
-                    <tr>
-                        <td>{{ tag.id }}</td>
-                        <td>{{ tag.tag_classification }}</td>
-                        <td>{{ tag.tag_name }}</td>
-                        <td>
-                            <a class="btn btn-danger btn-xs"
-                                href="/label/delete/?nid={{tag.id}}">Delete</a>
-                        </td>
-                        {% endfor %}
-                </tbody>
-            </table>
+            <div style="overflow: auto; max-height: 400px;">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Classification</th>
+                            <th>Tags</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tag in data_list %}
+                        <tr>
+                            <td>{{ tag.id }}</td>
+                            <td>{{ tag.tag_classification }}</td>
+                            <td>{{ tag.tag_name }}</td>
+                            <td>
+                                <a class="btn btn-danger btn-xs"
+                                    href="/label/delete/?nid={{tag.id}}">Delete</a>
+                            </td>
+                            {% endfor %}
+                    </tbody>
+                </table>
+             </div>
 
 
         </div>

@@ -20,37 +20,39 @@
 
 
             <!-- Table -->
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Question</th>
-                        <th>Labels</th>
-                        <th>Model</th>
-                        <th>Answer</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for obj in data_list %}
-                    {% for lmodel in obj.lmodel_set.all %}
-                    <tr>
-                        <td>{{ obj.id }}</td>
-                        <td>{{ obj.question }}</td>
-                        <td>{{ obj.tag_name }}</td>
-                        <td>{{ lmodel.get_lmodel_display }}</td>
-                        <td>{{ lmodel.answer }}</td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td>{{ obj.id }}</td>
-                        <td>{{ obj.question }}</td>
-                        <td>{{ obj.tag_name }}</td>
-                        <td colspan="2">No answers for this question.</td>
-                    </tr>
-                    {% endfor %}
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div style="overflow: auto; max-height: 400px;">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Question</th>
+                            <th>Labels</th>
+                            <th>Model</th>
+                            <th>Answer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for obj in data_list %}
+                        {% for lmodel in obj.lmodel_set.all %}
+                        <tr>
+                            <td>{{ obj.id }}</td>
+                            <td>{{ obj.question }}</td>
+                            <td>{{ obj.tag_name }}</td>
+                            <td>{{ lmodel.get_lmodel_display }}</td>
+                            <td>{{ lmodel.answer }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td>{{ obj.id }}</td>
+                            <td>{{ obj.question }}</td>
+                            <td>{{ obj.tag_name }}</td>
+                            <td colspan="2">No answers for this question.</td>
+                        </tr>
+                        {% endfor %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
         </div>
 

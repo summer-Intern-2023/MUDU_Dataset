@@ -21,33 +21,35 @@
 
 
             <!-- Table -->
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>User name</th>
-                        <th>Password</th>
-                        <th>Role</th>
-                        <th>Edit</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for obj in data_list %}
-                    <tr>
-                        <td>{{ obj.id }}</td>
-                        <td>{{ obj.name }}</td>
-                        <td>{{ obj.password }}</td>
-                        <td>{{ obj.get_role_display }}</td>
-                        <td>
-                            <a class="btn btn-primary btn-xs"
-                                href="/info/{{ obj.id }}/edit/">Edit</a>
-                            <a class="btn btn-danger btn-xs"
-                                href="/info/delete/?nid={{obj.id}}">Delete</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div style="overflow: auto; max-height: 400px;">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>User name</th>
+                            <th>Password</th>
+                            <th>Role</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for obj in data_list %}
+                        <tr>
+                            <td>{{ obj.id }}</td>
+                            <td>{{ obj.name }}</td>
+                            <td>{{ obj.password }}</td>
+                            <td>{{ obj.get_role_display }}</td>
+                            <td>
+                                <a class="btn btn-primary btn-xs"
+                                    href="/info/{{ obj.id }}/edit/">Edit</a>
+                                <a class="btn btn-danger btn-xs"
+                                    href="/info/delete/?nid={{obj.id}}">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
 
     </div>
