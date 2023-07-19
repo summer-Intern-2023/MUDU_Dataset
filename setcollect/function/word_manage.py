@@ -21,9 +21,9 @@ def word_list(request):
 
 def word_add(request):
     label_pool = Tag.objects.all()
-    
     if request.method == "GET":
         return render(request, "word_add.html", {"label_pool": label_pool})
+    
     word = request.POST.get("word")
     tag_names = request.POST.get("tag_name")
     tag_classification = request.POST.get("tag_classification")

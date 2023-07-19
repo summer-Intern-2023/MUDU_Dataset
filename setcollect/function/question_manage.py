@@ -49,16 +49,13 @@ def question_add(request):
 
     conversation_name = request.POST.get("conversation")
     question_text = request.POST.get("question")
-    tag_names = request.POST.get("tag_name").split()
+    tag_names = request.POST.get("tag_name")
     answer = request.POST.get("answer")
     lmodel_choice = request.POST.get("lmodel")
 
     if not question_text or question_text.strip() == "":
         messages.error(request, "Question cannot be empty or only contain spaces！")
-        return redirect(
-            http_address
-            + f"question/add?answer={answer}&tag_name={' '.join(tag_names)}"
-        )
+        return render(request, "question_add.html")
 
     if not answer or answer.strip() == "":
         messages.error(request, "Answer cannot be empty or only contain spaces！")

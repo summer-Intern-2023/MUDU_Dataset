@@ -32,10 +32,10 @@
 
                         <div id="tagsDisplay" style="margin-top: 10px;"></div>
 
-                        <div id="tagButtons" style="margin-top: 10px; overflow: auto; max-height: 100px;">
+                        <div id="tagButtons" style="margin-top: 10px; overflow: auto; max-height: 300px;">
                             {% for tag in label_pool %}
                             <button type="button" onclick="addTagFromInput(event)" class="btn btn-secondary btn-sm"
-                                style="background-color: #a4a9b0; margin-bottom: 5px">{{ tag.tag_name }}</button>
+                                style="background-color: #99ff33; margin-bottom: 5px">{{ tag.tag_name }}</button>
                             {% endfor %}
                         </div>
                     </div>
