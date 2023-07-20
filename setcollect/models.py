@@ -38,7 +38,7 @@ class LModel(models.Model):
 
 
 class Tag(models.Model):
-    tag_degree = models.CharField(max_length=16)
+    tag_degree = models.CharField(max_length=16 , null=True) 
     tag_classification = models.CharField(max_length=16)
     tag_name = models.CharField(max_length=32)
 
