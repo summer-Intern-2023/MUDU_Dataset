@@ -42,7 +42,9 @@
 
                 {% if messages %}
                 <div class="alert alert-danger" role="alert">
-                    {{ messages }}
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
                 </div>
                 {% endif %}
 
@@ -53,6 +55,26 @@
 
 
 <script>
+        // 使用 JavaScript 获取 CSRF 令牌
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    // 使用 PUT 请求提交数据，并添加 CSRF 令牌到请求头部
+    fetch('/label/add/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken,  // 添加 CSRF 令牌到请求头部
+        },
+        body: JSON.stringify({data: 'your_data'}),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
     var tagButtons = Array.from(document.getElementById('tagButtons').children);
     var selectedTags = [];
 
@@ -103,6 +125,10 @@
         selectedTags = initialTags.split(' ');
         updateDisplay();
     }
+
+
 </script>
+
+
 
 {% endblock %}
