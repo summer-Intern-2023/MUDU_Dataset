@@ -95,7 +95,9 @@ def question_edit(request, nid):
     label_pool = Tag.objects.all()
     if request.method == "GET":
         row_object = Question.objects.filter(id=nid).first()
-        lmodel_object = LModel.objects.filter(question=row_object).first()  # Get the LModel object for the question
+        lmodel_object = LModel.objects.filter(
+            question=row_object
+        ).first()  # Get the LModel object for the question
         if lmodel_object is not None:
             current_answer = lmodel_object.answer
         else:
@@ -106,7 +108,7 @@ def question_edit(request, nid):
             {
                 "row_object": row_object,
                 "label_pool": label_pool,
-                "current_answer": current_answer
+                "current_answer": current_answer,
             },  # Pass the current answer to the template
         )
 
@@ -134,7 +136,9 @@ def question_edit(request, nid):
     conversation, created = Conversation.objects.get_or_create(name=conversation_name)
 
     # Get the question instance after updating
-    Question.objects.filter(id=nid).update(question=question_text, conversation=conversation)
+    Question.objects.filter(id=nid).update(
+        question=question_text, conversation=conversation
+    )
     question = Question.objects.get(id=nid)
 
     # Remove all existing tags for the question
@@ -147,4 +151,3 @@ def question_edit(request, nid):
     LModel.objects.filter(question=question).update(lmodel=lmodel_choice, answer=answer)
 
     return redirect(http_address + "question/list/")
-

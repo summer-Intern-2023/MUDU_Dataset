@@ -44,9 +44,7 @@ def word_add(request):
 
     # Create the tag
     for tag_name in tag_names:
-        tag, created = Tag.objects.get_or_create(
-            tag_name=tag_name, tag_classification=tag_classification
-        )
+        tag, created = Tag.objects.get_or_create(tag_name=tag_name)
         word.word_tag.add(tag)
 
     return redirect(http_address + "word/list/")
