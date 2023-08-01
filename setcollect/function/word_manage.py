@@ -49,9 +49,13 @@ def word_add(request):
 
     # Create the tag
     for tag_name in tag_names:
+<<<<<<< HEAD
         tag, created = Tag.objects.get_or_create(
             tag_name=tag_name
         )
+=======
+        tag, created = Tag.objects.get_or_create(tag_name=tag_name)
+>>>>>>> b1fd76d5d7d4a7260ae76fd9ba3323705d16412f
         word.word_tag.add(tag)
 
 
