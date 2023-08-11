@@ -64,7 +64,12 @@ urlpatterns = [
     path("word/delete/", word_manage.word_delete),
     path('word/<int:nid>/edit/', word_manage.word_edit),
     
-    
+    #conversation manage
+    path("conversation/list/", views.conversation_list),
+
+    #chatbot manage
+    path('chatbot/', views.chatbot_view, name='chatbot'),
+
     
     
 ]
