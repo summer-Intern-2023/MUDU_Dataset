@@ -27,6 +27,7 @@ from setcollect.function import (
     title_manage,
     label_collection,
     word_manage,
+    chat_robot,
 )
 
 urlpatterns = [
@@ -64,6 +65,9 @@ urlpatterns = [
     path("word/delete/", word_manage.word_delete),
     path('word/<int:nid>/edit/', word_manage.word_edit),
     
+    
+    #chat robot
+    path('chatbot/chat/', chat_robot.chat_bot),
     
     
     
