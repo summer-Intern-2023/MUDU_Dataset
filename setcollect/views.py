@@ -9,4 +9,8 @@ def info_main(request):
 def test(request):
     return render(request, "test.html")
     
-    
+def conversation_list(request):
+    return render(request, "conversation_list.html")
+   
+def chatbot_view(request):
+    return render(request, 'Chatbot.html')

@@ -3,22 +3,181 @@
 <html lang="en">
 
 <head>
+    
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LLM dataset</title>
+    <title>Hello Mudu</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1-dist/css/bootstrap.min.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        .navbar {
+    border: 0;
+}
+
+.navbar-default .navbar-brand {
+    background-color: #aaebff;
+    transition: background-color 0.3s;
+}
+
+.navbar-default .navbar-brand:hover {
+    background-color: lightgray;
+}
+
+.navbar-default .navbar-nav>.active>a:hover,
+.navbar-default .navbar-nav>.active>a:focus {
+    background-color: lightgray;
+}
+
+.navbar-default .navbar-nav>.dropdown>a {
+    background-color: #ede8e8;  /* 灰色 */
+    transition: background-color 0.3s;
+}
+
+.navbar-default .navbar-nav>.dropdown>a:hover {
+    background-color: lightgray;
+}
+
+.navbar-default .navbar-nav>.current>a {
+    background-color: #a5a8a6;
+}
+
+        @media (max-width: 992px) {
+            .navbar-header {
+                float: none;
+            }
+            .navbar-left,.navbar-right {
+                float: none !important;
+            }
+            .navbar-toggle {
+                display: block;
+            }
+            .navbar-collapse {
+                border-top: 1px solid transparent;
+                box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+            }
+            .navbar-fixed-top {
+                top: 0;
+                border-width: 0 0 1px;
+            }
+            .navbar-collapse.collapse {
+                display: none!important;
+            }
+            .navbar-nav {
+                float: none!important;
+                margin-top: 7.5px;
+            }
+            .navbar-nav>li {
+                float: none;
+            }
+            .navbar-nav>li>a {
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+            .collapse.in{
+                display:block !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/info/main/">Hello Mudu</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active {% if request.path == '/info/list/' %}current{% endif %}"><a href="/info/list/">User Manage</a></li>
+                    <li class="active {% if request.path == '/conversation/list/' %}current{% endif %}"><a href="/conversation/list/">Conversation Manage</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Data Manage<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/word/list/">Word</a></li>
+                            <li><a href="/label/list/">Label</a></li>
+                            <li><a href="/title/list/">Title</a></li>
+                        </ul>
+                    </li>
+                    <li class="active {% if request.path == '/chatbot/' %}current{% endif %}"><a href="/chatbot/">Chatbot&eval</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            {% if user.is_authenticated %}
+                            Logged In
+                            {% else %}
+                            Log In
+                            {% endif %}
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            {% if user.is_authenticated %}
+                            <li><a href="#">[Current User Name]</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/login/">Log out</a></li>
+                            {% else %}
+                            <li><a href="/login/">Log In</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div>
+        {% block content %} {% endblock %}
+    </div>
+
+    <script src="{% static 'js/jquery-3.6.3.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-3.4.1-dist/js/bootstrap.min.js' %}"></script>
+    <script>
+        // Dropdown on hover
+        $('.navbar .dropdown').hover(function() {
+            $(this).find('.dropdown-menu').first().stop(true, true).slideDown();
+        }, function() {
+            $(this).find('.dropdown-menu').first().stop(true, true).slideUp();
+        });
+    </script>
+</body>
+
+</html>
+
+
+
+{% comment %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Mudu</title>
     <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1-dist/css/bootstrap.min.css' %}">
     <style>
         .navbar {
             border: 0;
         }
 
-        .navbar-default .navbar-brand {
+        .navbar-default .navbar-brand,
+        .navbar-default .navbar-nav>li>a {
             background-color: #aaebff;
             transition: background-color 0.3s;
         }
 
-        .navbar-default .navbar-brand:hover {
+        .navbar-default .navbar-brand:hover,
+        .navbar-default .navbar-nav>li>a:hover {
             background-color: lightgray;
         }
 
@@ -27,54 +186,45 @@
             background-color: lightgray;
         }
 
-        /* This is the new class for the active link */
         .navbar-default .navbar-nav>.current>a {
             background-color: #a5a8a6;
         }
-
     </style>
-
 </head>
 
 <body>
-
     <nav class="navbar navbar-default">
         <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/info/main">LLM dataset</a>
-
+                <a class="navbar-brand" href="/info/main/">Hello Mudu</a>
             </div>
-
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active {% if request.path == '/info/list/' %}current{% endif %}"><a href="/info/list/">Account Management<span
-                                class="sr-only">(current)</span></a></li>
-                    <li class="active {% if request.path == '/title/list/' %}current{% endif %}"><a href="/title/list/">Title Management<span
-                                class="sr-only">(current)</span></a></li>
-                    <li class="active {% if request.path == '/question/list/' %}current{% endif %}"><a href="/question/list/">Data Management<span
-                                class="sr-only">(current)</span></a></li>
-                    <li class="active {% if request.path == '/label/list/' %}current{% endif %}"><a href="/label/list/">Label Management<span
-                                class="sr-only">(current)</span></a></li>
-                    <li class="active {% if request.path == '/word/list/' %}current{% endif %}"><a href="/word/list/">Word Management<span
-                                class="sr-only">(current)</span></a></li>                                
+                    <li class="active {% if request.path == '/info/list/' %}current{% endif %}"><a href="/info/list/">User Manage</a></li>
+                    <li class="active {% if request.path == '/title/list/' %}current{% endif %}"><a href="/conversation/list/">Conversation Manage</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Data Manage<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/word/list/">Word</a></li>
+                            <li><a href="/label/list/">Label</a></li>
+                            <li><a href="/title/list/">Title</a></li>
+                        </ul>
+                    </li>
+                    <li class="active {% if request.path == '/question/list/' %}current{% endif %}"><a href="/question/list/">Chatbot&eval</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-
-
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                            aria-expanded="false">Logged in<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Log In(or Logged In)<span class="caret"></span></a>
                         <ul class="dropdown-menu">
+                            <li><a href="#">[Current User Name]</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="/login/">Log out</a></li>
                         </ul>
@@ -84,7 +234,6 @@
         </div>
     </nav>
 
-
     <div>
         {% block content %} {% endblock %}
     </div>
@@ -93,5 +242,6 @@
     <script src="{% static 'plugins/bootstrap-3.4.1-dist/js/bootstrap.min.js' %}"></script>
 </body>
 
-</html>
+</html> {% endcomment %}
+
 
