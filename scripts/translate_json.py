@@ -1,9 +1,10 @@
 import json
 
 output_list = list()
-path = "path/to/src"
+path = "/home/vcp/Mudu/Web_Application_Project/scripts/"
 filenames = [
     # add all json there
+    "chatgpt-7.json",
 ]
 
 try: 
@@ -32,6 +33,6 @@ try:
 except: 
     print("Error with open", filename)
 
-with open("path/to/outfile/chathistory.json", "w", encoding='utf-8') as fout:
+with open("/home/vcp/Mudu/Web_Application_Project/scripts/chathistory.json", "w", encoding='utf-8') as fout:
    json.dump(output_list , fout, ensure_ascii=False)
 

@@ -46,7 +46,7 @@ def login(request):
             return render(request, "login.html", {"form": form})
 
         request.session["info"] = {"id": user_object.id, "name": user_object.name}
-        return redirect(http_address + "info/main")
+        return redirect(http_address + "info/main/")
 
 
 def info_list(request):
