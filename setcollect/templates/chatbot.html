@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-
+{% load static %}
 {% block content %}
 <style>
     #chatbox {
@@ -15,7 +15,6 @@
     .message {
         margin-bottom: 10px;
     }
-
     .user-icon, .ai-icon {
         font-size: 40px;
         width: 40px;
@@ -24,7 +23,13 @@
         text-align: center;
         line-height: 40px;
     }
+    
+    .ai-icon {
+        background-size: cover;  /* 或 use 'contain' 根据需要 */
+        background-position: center center;
+    }
 
+    
     .user-message {
         background-color: #e6e6e6;
         padding: 10px;
@@ -79,31 +84,41 @@
         `;
         chatbox.appendChild(userDiv);
     
-        // Append AI message
-        const aiDiv = document.createElement('div');
-        aiDiv.classList.add('message', 'text-left');
-        aiDiv.innerHTML = `
-            <span class="ai-icon bi bi-robot"></span>
-            <div class="ai-message">你好，我是木渎作文助手</div>
-            <div class="clearfix"></div>
-        `;
-        chatbox.appendChild(aiDiv);
+        // Use AJAX to send user input to the backend
+        fetch('/chatbot/response/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain'
+            },
+            body: input.value
+        })
+        .then(response => response.text())
+        .then(aiResponse => {
+            // Append AI message with the response from the backend
+            const aiDiv = document.createElement('div');
+            aiDiv.classList.add('message', 'text-left');
+            aiDiv.innerHTML = `
+                <img src="{% static 'images/Mudu.jpg' %}" class="ai-icon">
+                <div class="ai-message">${aiResponse}</div>
+                <div class="clearfix"></div>
+            `;
+            chatbox.appendChild(aiDiv);
+    
+            // Scroll to bottom
+            chatbox.scrollTop = chatbox.scrollHeight;
+        });
     
         // Clear input
         input.value = '';
-    
-        // Scroll to bottom
-        chatbox.scrollTop = chatbox.scrollHeight;
     }
 
-    // Function to show AI's opening message
     function showOpeningMessage() {
         const chatbox = document.getElementById('chatbox');
         const aiDiv = document.createElement('div');
         aiDiv.classList.add('message', 'text-left');
         aiDiv.innerHTML = `
-            <span class="ai-icon bi bi-robot"></span>
-            <div class="ai-message">你好，我是木渎作文助手</div>
+            <img src="{% static 'images/Mudu.jpg' %}" class="ai-icon">
+            <div class="ai-message">你好，我是木渎作文助手。</div>
             <div class="clearfix"></div>
         `;
         chatbox.appendChild(aiDiv);

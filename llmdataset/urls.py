@@ -69,7 +69,7 @@ urlpatterns = [
 
     #chatbot manage
     path('chatbot/', views.chatbot_view, name='chatbot'),
-
+    path('chatbot/response/', views.handle_input, name='handle_input')
     
     
 ]
