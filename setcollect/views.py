@@ -11,6 +11,4 @@ def test(request):
     
 def conversation_list(request):
     return render(request, "conversation_list.html")
-   
-def chatbot_view(request):
-    return render(request, 'Chatbot.html')
+

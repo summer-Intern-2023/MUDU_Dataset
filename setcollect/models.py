@@ -25,9 +25,14 @@ class Question(models.Model):
 class LModel(models.Model):
     model_choice = (
         (1, "ChatGPT"),
-        (2, "ChatGLM"),
-        (3, "Bard"),
-        (4, "Human"),
+        (2, "iflytek spark"),
+        (3, "Human"),
+        (4, "Mudu V1.0"),
+        (5, "Mudu V2.0"),
+        (6, "Mudu V3.0"),
+        (7, "Mudu V4.0"),
+        (8, "Mudu V5.0"),
+        (9, "Mudu V6.0"),
     )
 
     lmodel = models.SmallIntegerField(
