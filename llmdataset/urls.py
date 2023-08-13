@@ -74,6 +74,9 @@ urlpatterns = [
     #conversation manage
     path("conversation/list/", views.conversation_list),
 
+    #evaluation page
+    path('evaluation/', views.evaluation, name='evaluation')
+    
     #chatbot manage
     #path('chatbot/', views.chatbot_view, name='chatbot'),
 

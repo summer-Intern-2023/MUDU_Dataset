@@ -1,0 +1,79 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Select a Question</h3>
+        </div>
+        <div class="panel-body">
+            <form action="{% url 'evaluation' %}" method="get">
+                <select name="question_text" class="form-control" onchange="this.form.submit()">
+                    <option value="">-- Select a Question --</option>
+                    {% for question in all_questions %}
+                    <option value="{{ question.question }}" {% if question.question == selected_question_text %}selected{% endif %}>
+                        {{ question.question }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+    </div>
+
+    <!-- 添加的4个滚轮框，2x2布局 -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    MUDU 1
+                </div>
+                <div class="panel-body" style="overflow: auto; max-height: 200px;">
+                    <!-- 这里可以添加答案的内容 -->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    MUDU 2
+                </div>
+                <div class="panel-body" style="overflow: auto; max-height: 200px;">
+                    <!-- 这里可以添加答案的内容 -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    ChatGLM
+                </div>
+                <div class="panel-body" style="overflow: auto; max-height: 200px;">
+                    <!-- 这里可以添加答案的内容 -->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    iflytek spark
+                </div>
+                <div class="panel-body" style="overflow: auto; max-height: 200px;">
+                    <!-- 这里可以添加答案的内容 -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+
