@@ -52,6 +52,7 @@ def question_add(request):
     tag_names = request.POST.get("tag_name")
     answer = request.POST.get("answer")
     lmodel_choice = request.POST.get("lmodel")
+    evaluation = request.POST.get("evaluation")
 
     if not question_text or question_text.strip() == "":
         messages.error(request, "Question cannot be empty or only contain spaces！")
@@ -73,7 +74,7 @@ def question_add(request):
     )
 
     # Create the LModel
-    LModel.objects.create(lmodel=lmodel_choice, answer=answer, question=question)
+    LModel.objects.create(lmodel=lmodel_choice, answer=answer, question=question, evaluation=evaluation)
 
     # Create the tag
     for tag_name in tag_names:
@@ -115,6 +116,7 @@ def question_edit(request, nid):
     tag_names = request.POST.get("tag_name").split()
     answer = request.POST.get("answer")
     lmodel_choice = request.POST.get("lmodel")
+    evaluation = request.POST.get("evaluation")
 
     if not question_text or question_text.strip() == "":
         messages.error(request, "Question cannot be empty or only contain spaces！")
@@ -135,7 +137,9 @@ def question_edit(request, nid):
 
     # Get the question instance after updating
     Question.objects.filter(id=nid).update(
-        question=question_text, conversation=conversation
+        question=question_text, 
+        conversation=conversation,
+        evaluation = evaluation
     )
     question = Question.objects.get(id=nid)
 
@@ -146,6 +150,6 @@ def question_edit(request, nid):
         tag, created = Tag.objects.get_or_create(tag_name=tag_name)
         question.question_tag.add(tag)
 
-    LModel.objects.filter(question=question).update(lmodel=lmodel_choice, answer=answer)
+    LModel.objects.filter(question=question).update(lmodel=lmodel_choice, answer=answer, evaluation=evaluation)
 
     return redirect(http_address + "question/list/")
