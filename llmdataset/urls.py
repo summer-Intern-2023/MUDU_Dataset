@@ -67,7 +67,8 @@ urlpatterns = [
     
     
     #chat robot
-    path('chatbot/chat/', chat_robot.chat_bot),
+    path('chatbot/', chat_robot.chatbot_view, name='chatbot'),
+    path('chatbot/chat/', chat_robot.chat_bot_response, name='chat_bot'),
     path('chatbot/eval/', chat_robot.chat_eval),
     
     #conversation manage
@@ -76,8 +77,7 @@ urlpatterns = [
     #chatbot manage
     #path('chatbot/', views.chatbot_view, name='chatbot'),
 
-    path('chatbot/', views.chatbot_view, name='chatbot'),
-    path('chatbot/response/', views.handle_input, name='handle_input')
+    # path('chatbot/response/', views.handle_input, name='handle_input')
     
     
 ]

@@ -63,6 +63,9 @@
 
     <div class="mt-3">
         <input type="text" class="form-control" id="userInput" placeholder="Type your message...">
+        <div class="send-button" >
+            <a class="btn btn-primary mt-2" href="/chatbot/">Clear</a>
+        </div>
         <div class="send-button">
             <button class="btn btn-primary mt-2" onclick="sendMessage()">Send</button>
         </div>
@@ -85,7 +88,7 @@
         chatbox.appendChild(userDiv);
     
         // Use AJAX to send user input to the backend
-        fetch('/chatbot/response/', {
+        fetch('/chatbot/chat/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain'
