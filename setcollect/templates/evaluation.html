@@ -12,8 +12,8 @@
                 <select name="question_text" class="form-control" onchange="this.form.submit()">
                     <option value="">-- Select a Question --</option>
                     {% for question in all_questions %}
-                    <option value="{{ question.question }}" {% if question.question == selected_question_text %}selected{% endif %}>
-                        {{ question.question }}
+                    <option value="{{ question }}" {% if question == selected_question_text %}selected{% endif %}>
+                        {{ question }}
                     </option>
                     {% endfor %}
                 </select>
@@ -26,20 +26,20 @@
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    MUDU 1
+                    Mudu V1.0
                 </div>
                 <div class="panel-body" style="overflow: auto; max-height: 200px;">
-                    <!-- 这里可以添加答案的内容 -->
+                    {{ answers_by_model.4|default:"This question does not have answer from this model." }}
                 </div>
             </div>
         </div>
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    MUDU 2
+                    Mudu V2.0
                 </div>
                 <div class="panel-body" style="overflow: auto; max-height: 200px;">
-                    <!-- 这里可以添加答案的内容 -->
+                    {{ answers_by_model.5|default:"This question does not have answer from this model." }}
                 </div>
             </div>
         </div>
@@ -49,10 +49,10 @@
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    ChatGLM
+                    Human
                 </div>
                 <div class="panel-body" style="overflow: auto; max-height: 200px;">
-                    <!-- 这里可以添加答案的内容 -->
+                    {{ answers_by_model.3|default:"This question does not have answer from this model." }}
                 </div>
             </div>
         </div>
@@ -62,7 +62,7 @@
                     iflytek spark
                 </div>
                 <div class="panel-body" style="overflow: auto; max-height: 200px;">
-                    <!-- 这里可以添加答案的内容 -->
+                    {{ answers_by_model.2|default:"This question does not have answer from this model." }}
                 </div>
             </div>
         </div>

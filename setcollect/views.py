@@ -30,16 +30,17 @@ def handle_input(request):
 
 
 def evaluation(request):
+    # 获取所有唯一的问题文本
     unique_questions = Question.objects.values_list('question', flat=True).distinct()
 
     selected_question_text = request.GET.get('question_text')
+    answers_by_model = {}
     if selected_question_text:
-        answers_by_model = {}
+        # 获取每个模型的答案
         for model_choice in LModel.model_choice:
             model_id = model_choice[0]
-            answers_by_model[model_id] = LModel.objects.filter(question__question=selected_question_text, lmodel=model_id)
-    else:
-        answers_by_model = {}
+            answers = LModel.objects.filter(question__question=selected_question_text, lmodel=model_id)
+            answers_by_model[model_id] = answers[0].answer if answers else "This question does not have answer from this model."  # 如果没有答案，就使用默认文本
 
     context = {
         'all_questions': unique_questions,
