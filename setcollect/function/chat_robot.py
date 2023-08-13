@@ -38,7 +38,7 @@ def chat_bot_response(request):
             prompt_template="default"
         )
         generating_arguments = GeneratingArguments(
-            temperature=0.1,
+            temperature=0.90,
             max_new_tokens=512,
             top_p=0.7,
             repetition_penalty=1.02,

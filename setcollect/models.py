@@ -40,6 +40,7 @@ class LModel(models.Model):
     )
     answer = models.TextField()
     question = models.ForeignKey("Question", on_delete=models.CASCADE)
+    evaluation = models.IntegerField()
 
 
 class Tag(models.Model):

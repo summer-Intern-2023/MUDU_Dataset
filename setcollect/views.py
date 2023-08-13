@@ -48,5 +48,5 @@ def evaluation(request):
         'selected_question_text': selected_question_text
     }
 
-    return render(request, 'Evaluation.html', context)
+    return render(request, 'evaluation.html', context)
 
