@@ -2,6 +2,7 @@
 
 {% block content %}
 
+
 <div class="container">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -16,61 +17,119 @@
                         {{ question }}
                     </option>
                     {% endfor %}
-                </select>
+                </select>                
             </form>
         </div>
     </div>
 
-    <!-- 添加的4个滚轮框，2x2布局 -->
-    <div class="row">
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Mudu V1.0
+    <form action="{% url 'rate' %}" method="post" onsubmit="return validateForm();">
+        {% csrf_token %}
+        <!-- 添加隐藏字段来存储所选问题的文本 -->
+        <input type="hidden" name="question_text" value="{{ selected_question_text }}">
+        <!-- 添加的4个滚轮框，2x2布局 -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Mudu V1.0
+                    </div>
+                    <div class="panel-body" style="overflow: auto; max-height: 200px;">
+                        {{ answers_by_model.4|default:"This question does not have answer from this model." }}
+                    </div>
+                    <div class="panel-footer">
+                        <input type="number" name="rating_4" placeholder="Please enter num 1-100" min="1" max="100" value="{{ current_ratings.4 }}">
+                    </div>
                 </div>
-                <div class="panel-body" style="overflow: auto; max-height: 200px;">
-                    {{ answers_by_model.4|default:"This question does not have answer from this model." }}
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Mudu V6.0
+                    </div>
+                    <div class="panel-body" style="overflow: auto; max-height: 200px;">
+                        {{ answers_by_model.9|default:"This question does not have answer from this model." }}
+                    </div>
+                    <div class="panel-footer">
+                        <input type="number" name="rating_9" placeholder="Please enter num 1-100" min="1" max="100" value="{{ current_ratings.9 }}">
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Mudu V6.0
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        ChatGPT
+                    </div>
+                    <div class="panel-body" style="overflow: auto; max-height: 200px;">
+                        {{ answers_by_model.1|default:"This question does not have answer from this model." }}
+                    </div>
+                    <div class="panel-footer">
+                        <input type="number" name="rating_1" placeholder="Please enter num 1-100" min="1" max="100" value="{{ current_ratings.1 }}">
+                    </div>
                 </div>
-                <div class="panel-body" style="overflow: auto; max-height: 200px;">
-                    {{ answers_by_model.9|default:"This question does not have answer from this model." }}
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        iflytek spark
+                    </div>
+                    <div class="panel-body" style="overflow: auto; max-height: 200px;">
+                        {{ answers_by_model.2|default:"This question does not have answer from this model." }}
+                    </div>
+                    <div class="panel-footer">
+                        <input type="number" name="rating_2" placeholder="Please enter num 1-100" min="1" max="100" value="{{ current_ratings.2 }}">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <div class="row">
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    ChatGPT
-                </div>
-                <div class="panel-body" style="overflow: auto; max-height: 200px;">
-                    {{ answers_by_model.1|default:"This question does not have answer from this model." }}
-                </div>
+
+        <!-- 输入框大小调整 -->
+        <style>
+            input[type="number"] {
+                width: 200px;
+            }
+        </style>
+
+        <!-- 在页面下方添加一个整体的rate按钮 -->
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary">Rate All</button>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    iflytek spark
-                </div>
-                <div class="panel-body" style="overflow: auto; max-height: 200px;">
-                    {{ answers_by_model.2|default:"This question does not have answer from this model." }}
-                </div>
-            </div>
-        </div>
-    </div>
+    </form>
 </div>
 
-{% endblock %}
+<script>
+    function validateForm() {
+        const models = {
+            1: "ChatGPT",
+            2: "iflytek spark",
+            4: "Mudu V1.0",
+            9: "Mudu V6.0"
+        };
 
+        for (const modelId in models) {
+            const input = document.querySelector(`input[name="rating_${modelId}"]`);
+            const value = input.value;
+
+            if (!value) {
+                alert(`${models[modelId]} 输入不能为空`);
+                return false;
+            }
+
+            if (isNaN(value) || value < 1 || value > 100) {
+                alert(`${models[modelId]} 输入必须在1-100之间`);
+                return false;
+            }
+        }
+
+        return true;
+    }
+</script>
+
+{% endblock %}
 
 
 

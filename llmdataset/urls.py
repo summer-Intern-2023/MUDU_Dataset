@@ -75,12 +75,12 @@ urlpatterns = [
     path("conversation/list/", views.conversation_list),
 
     #evaluation page
-    path('evaluation/', views.evaluation, name='evaluation')
+    path('evaluation/', views.evaluation, name='evaluation'),
+    path('rate/', views.rate, name='rate')
     
     #chatbot manage
     #path('chatbot/', views.chatbot_view, name='chatbot'),
 
     # path('chatbot/response/', views.handle_input, name='handle_input')
-    
-    
+       
 ]

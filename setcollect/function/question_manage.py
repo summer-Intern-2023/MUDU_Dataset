@@ -53,7 +53,16 @@ def question_add(request):
     answer = request.POST.get("answer")
     lmodel_choice = request.POST.get("lmodel")
     evaluation = request.POST.get("evaluation")
+    if not evaluation:
+        evaluation = 0
+    else:
+        try:
+            evaluation = int(evaluation)
+        except ValueError:
+            messages.error(request, "Evaluation must be a number between 1-100!")
+            return render(request, "question_add.html", {"label_pool": label_pool})
 
+    
     if not question_text or question_text.strip() == "":
         messages.error(request, "Question cannot be empty or only contain spaces！")
         return render(request, "question_add.html")

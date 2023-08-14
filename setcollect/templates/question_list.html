@@ -51,6 +51,7 @@
                             {% for lmodel in obj.lmodel_set.all %}
                             <td>{{ lmodel.get_lmodel_display }}</td>
                             <td>{{ lmodel.answer }}</td>
+                            <td>{{ lmodel.evaluation }}</td>
                             {% empty %}
                             <td colspan="2">No answers for this question.</td>
                             {% endfor %}
