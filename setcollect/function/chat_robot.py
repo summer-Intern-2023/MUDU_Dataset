@@ -7,6 +7,17 @@ from llmtuner.hparams import (
     GeneratingArguments
 )
 
+from setcollect.models import (
+    UserInfo,
+    Conversation,
+    Question,
+    LModel,
+    Tag,
+    Title,
+    Sentences,
+    Word,
+)
+
 http_address = "http://127.0.0.1:8000/"
 
 def chatbot_view(request):
@@ -21,6 +32,8 @@ def chat_bot_response(request):
         query = request.body.decode('utf-8')
         print(query)
         
+        
+        
         if query == "clear":
             history = []
             print("History has been removed.")
@@ -29,6 +42,7 @@ def chat_bot_response(request):
         
         ############init args for the model############
         model_args = ModelArguments(
+            # model_name_or_path="/home/vcp/YiMu/baichuan-7B"
             model_name_or_path="/home/vcp/YiMu/LLaMA-Efficient-Tuning/essay05"
         )
         finetuning_args = FinetuningArguments(
@@ -38,7 +52,7 @@ def chat_bot_response(request):
             prompt_template="default"
         )
         generating_arguments = GeneratingArguments(
-            temperature=0.90,
+            temperature=0.20,
             max_new_tokens=512,
             top_p=0.7,
             repetition_penalty=1.02,
@@ -64,16 +78,22 @@ def chat_bot_response(request):
                 response += new_text
             
             history = history + [(query, response)]
+            
+            conversation, created = Conversation.objects.get_or_create(name='作文写作')
+
+            question = Question.objects.create(
+                question=query, conversation=conversation
+            )
+            
+            LModel.objects.create(lmodel=9, answer=response, question=question, evaluation=0)
+
         
             return HttpResponse(response)
         
     ### return an error response for non-POST requests
     return HttpResponse(status=400) 
 
-        
-        
-        
-        
+
         
 def chat_eval(request):
     return

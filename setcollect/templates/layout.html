@@ -3,80 +3,91 @@
 <html lang="en">
 
 <head>
-    
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello Mudu</title>
+    <title>Hello</title>
     <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1-dist/css/bootstrap.min.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
         .navbar {
-    border: 0;
-}
+            border: 0;
+        }
 
-.navbar-default .navbar-brand {
-    background-color: #aaebff;
-    transition: background-color 0.3s;
-}
+        .navbar-default .navbar-brand {
+            background-color: #aaebff;
+            transition: background-color 0.3s;
+        }
 
-.navbar-default .navbar-brand:hover {
-    background-color: lightgray;
-}
+        .navbar-default .navbar-brand:hover {
+            background-color: lightgray;
+        }
 
-.navbar-default .navbar-nav>.active>a:hover,
-.navbar-default .navbar-nav>.active>a:focus {
-    background-color: lightgray;
-}
+        .navbar-default .navbar-nav>.active>a:hover,
+        .navbar-default .navbar-nav>.active>a:focus {
+            background-color: lightgray;
+        }
 
-.navbar-default .navbar-nav>.dropdown>a {
-    background-color: #ede8e8;  /* 灰色 */
-    transition: background-color 0.3s;
-}
+        .navbar-default .navbar-nav>.dropdown>a {
+            background-color: #ede8e8;
+            /* 灰色 */
+            transition: background-color 0.3s;
+        }
 
-.navbar-default .navbar-nav>.dropdown>a:hover {
-    background-color: lightgray;
-}
+        .navbar-default .navbar-nav>.dropdown>a:hover {
+            background-color: lightgray;
+        }
 
-.navbar-default .navbar-nav>.current>a {
-    background-color: #a5a8a6;
-}
+        .navbar-default .navbar-nav>.current>a {
+            background-color: #a5a8a6;
+        }
 
         @media (max-width: 992px) {
             .navbar-header {
                 float: none;
             }
-            .navbar-left,.navbar-right {
+
+            .navbar-left,
+            .navbar-right {
                 float: none !important;
             }
+
             .navbar-toggle {
                 display: block;
             }
+
             .navbar-collapse {
                 border-top: 1px solid transparent;
-                box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+                box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
             }
+
             .navbar-fixed-top {
                 top: 0;
                 border-width: 0 0 1px;
             }
+
             .navbar-collapse.collapse {
-                display: none!important;
+                display: none !important;
             }
+
             .navbar-nav {
-                float: none!important;
+                float: none !important;
                 margin-top: 7.5px;
             }
+
             .navbar-nav>li {
                 float: none;
             }
+
             .navbar-nav>li>a {
                 padding-top: 10px;
                 padding-bottom: 10px;
             }
-            .collapse.in{
-                display:block !important;
+
+            .collapse.in {
+                display: block !important;
             }
         }
     </style>
@@ -86,22 +97,27 @@
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/info/main/">Hello Mudu</a>
+                <a class="navbar-brand" href="/info/main/">Hello</a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active {% if request.path == '/chatbot/' %}current{% endif %}"><a href="/chatbot/">Chatbot</a></li>
-                    <li class="active {% if request.path == '/evalvatoin/' %}current{% endif %}"><a href="/evaluation/">Evaluation</a></li>
-                    <li class="active {% if request.path == '/conversation/list/' %}current{% endif %}"><a href="/conversation/list/">Conversation Manage</a></li>
+                    <li class="active {% if request.path == '/chatbot/' %}current{% endif %}"><a
+                            href="/chatbot/">Chatbot</a></li>
+                    <li class="active {% if request.path == '/evalvatoin/' %}current{% endif %}"><a
+                            href="/evaluation/">Evaluation</a></li>
+                    <li class="active {% if request.path == '/question/list/' %}current{% endif %}"><a
+                            href="/question/list/">Question Manage</a></li>
                     {% comment %} <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Data Manage<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">Data Manage<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="/word/list/">Word</a></li>
                             <li><a href="/label/list/">Label</a></li>
@@ -112,7 +128,8 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">
                             {% if user.is_authenticated %}
                             Logged In
                             {% else %}
@@ -143,9 +160,9 @@
     <script src="{% static 'plugins/bootstrap-3.4.1-dist/js/bootstrap.min.js' %}"></script>
     <script>
         // Dropdown on hover
-        $('.navbar .dropdown').hover(function() {
+        $('.navbar .dropdown').hover(function () {
             $(this).find('.dropdown-menu').first().stop(true, true).slideDown();
-        }, function() {
+        }, function () {
             $(this).find('.dropdown-menu').first().stop(true, true).slideUp();
         });
     </script>
@@ -163,7 +180,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello Mudu</title>
+    <title>Hello</title>
     <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1-dist/css/bootstrap.min.css' %}">
     <style>
         .navbar {
@@ -196,33 +213,39 @@
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/info/main/">Hello Mudu</a>
+                <a class="navbar-brand" href="/info/main/">Hello</a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active {% if request.path == '/info/list/' %}current{% endif %}"><a href="/info/list/">User Manage</a></li>
-                    <li class="active {% if request.path == '/title/list/' %}current{% endif %}"><a href="/conversation/list/">Conversation Manage</a></li>
+                    <li class="active {% if request.path == '/info/list/' %}current{% endif %}"><a
+                            href="/info/list/">User Manage</a></li>
+                    <li class="active {% if request.path == '/title/list/' %}current{% endif %}"><a
+                            href="/conversation/list/">Conversation Manage</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Data Manage<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">Data Manage<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="/word/list/">Word</a></li>
                             <li><a href="/label/list/">Label</a></li>
                             <li><a href="/title/list/">Title</a></li>
                         </ul>
                     </li>
-                    <li class="active {% if request.path == '/question/list/' %}current{% endif %}"><a href="/question/list/">Chatbot&eval</a></li>
+                    <li class="active {% if request.path == '/question/list/' %}current{% endif %}"><a
+                            href="/question/list/">Chatbot&eval</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Log In(or Logged In)<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">Log In(or Logged In)<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">[Current User Name]</a></li>
                             <li role="separator" class="divider"></li>
@@ -243,5 +266,3 @@
 </body>
 
 </html> {% endcomment %}
-
-

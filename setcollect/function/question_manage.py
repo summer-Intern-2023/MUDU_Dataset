@@ -53,6 +53,7 @@ def question_add(request):
     answer = request.POST.get("answer")
     lmodel_choice = request.POST.get("lmodel")
     evaluation = request.POST.get("evaluation")
+    
     if not evaluation:
         evaluation = 0
     else:
@@ -108,6 +109,7 @@ def question_edit(request, nid):
         ).first()  # Get the LModel object for the question
         if lmodel_object is not None:
             current_answer = lmodel_object.answer
+            current_evaluation = lmodel_object.evaluation
         else:
             current_answer = ""
         return render(
@@ -117,6 +119,7 @@ def question_edit(request, nid):
                 "row_object": row_object,
                 "label_pool": label_pool,
                 "current_answer": current_answer,
+                "current_evaluation": current_evaluation
             },  # Pass the current answer to the template
         )
 
@@ -148,7 +151,6 @@ def question_edit(request, nid):
     Question.objects.filter(id=nid).update(
         question=question_text, 
         conversation=conversation,
-        evaluation = evaluation
     )
     question = Question.objects.get(id=nid)
 
